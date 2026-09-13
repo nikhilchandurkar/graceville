@@ -136,10 +136,12 @@ git push -u origin main
    - `EMAIL_HOST`: `smtp.gmail.com`
    - `EMAIL_PORT`: `587`
    - `EMAIL_USE_TLS`: `True`
-   - `EMAIL_HOST_USER`: `nikhilchandurkar24@gmail.com`
-   - `EMAIL_HOST_PASSWORD`: `rhlavdkyccvnutgt`
-   - `DEFAULT_FROM_EMAIL`: `Grace Ville Reservations <nikhilchandurkar24@gmail.com>`
+   - `EMAIL_HOST_USER`: `your-sending-email@gmail.com`
+   - `EMAIL_HOST_PASSWORD`: `your-16-char-app-password`
+   - `DEFAULT_FROM_EMAIL`: `Grace Ville Reservations <your-sending-email@gmail.com>`
    - `MONGODB_URI`: *(your MongoDB Atlas URI from Step 2)*
+   - `DJANGO_SUPERUSER_USERNAME`: `admin` *(optional: set your custom admin username)*
+   - `DJANGO_SUPERUSER_PASSWORD`: *(optional: set your custom strong admin password)*
 6. Click **Deploy**!
 7. In ~60 seconds, Vercel will build your static files and deploy your live URL (e.g. `https://graceville-villa.vercel.app`).
 
@@ -161,7 +163,7 @@ Once deployed, visit your live Vercel URL:
      - A copy is stored in MongoDB Atlas (and local SQLite).
 4. **Staff Admin Portal**:
    - Go to `https://your-domain.vercel.app/admin/`
-   - Login: `admin` / `admin123`
+   - Log in using your configured admin credentials (or environment variables `DJANGO_SUPERUSER_USERNAME` / `DJANGO_SUPERUSER_PASSWORD`).
    - Review inquiries, filter by status, and update notes.
 
 ---
