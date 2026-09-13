@@ -245,30 +245,65 @@
         .sub-header {
           display: none !important;
         }
-        .header-area {
+        .header-area,
+        .background-header {
           height: 72px !important;
           padding: 0 15px !important;
           position: fixed !important;
           top: 0 !important;
           left: 0 !important;
+          right: 0 !important;
           width: 100% !important;
           background: #ffffff !important;
           box-shadow: 0 2px 10px rgba(0,0,0,0.08) !important;
           z-index: 99999 !important;
+          border-radius: 0 !important;
         }
-        .header-area .main-nav {
+        .header-area .container,
+        .background-header .container {
+          padding: 0 !important;
+          max-width: 100% !important;
+          width: 100% !important;
+          height: 100% !important;
+        }
+        .header-area .row,
+        .background-header .row {
+          margin: 0 !important;
+          height: 100% !important;
+          width: 100% !important;
+        }
+        .header-area .row > div,
+        .background-header .row > div {
+          padding: 0 !important;
+          height: 100% !important;
+          width: 100% !important;
+        }
+        .header-area .main-nav,
+        .background-header .main-nav {
           height: 72px !important;
           display: flex !important;
           align-items: center !important;
           justify-content: space-between !important;
           position: relative !important;
           overflow: visible !important;
+          background: transparent !important;
+          border-radius: 0 !important;
+          box-shadow: none !important;
+          padding: 0 !important;
+          width: 100% !important;
         }
-        .header-area .main-nav .logo {
+        .header-area .main-nav .logo,
+        .background-header .main-nav .logo {
+          position: relative !important;
+          top: auto !important;
+          left: auto !important;
+          right: auto !important;
+          order: 1 !important;
           display: flex !important;
           align-items: center !important;
           margin: 0 !important;
           text-decoration: none !important;
+          flex-shrink: 0 !important;
         }
         .logo-mark {
           width: 38px !important;
@@ -285,22 +320,28 @@
           font-size: 8px !important;
           letter-spacing: 1.5px !important;
         }
-        .header-area .main-nav .menu-trigger {
+        .header-area .main-nav .menu-trigger,
+        .background-header .main-nav .menu-trigger {
           display: block !important;
           position: relative !important;
-          top: 0 !important;
+          top: auto !important;
           right: 0 !important;
+          left: auto !important;
+          order: 2 !important;
           width: 36px !important;
           height: 36px !important;
           cursor: pointer !important;
           z-index: 100000 !important;
-          margin: 0 !important;
+          margin: 0 0 0 auto !important;
+          flex-shrink: 0 !important;
         }
         .header-area .main-nav .menu-trigger span {
           top: 17px !important;
+          left: 3px !important;
         }
         /* Mobile Dropdown Navigation Drawer */
-        .header-area .main-nav .nav {
+        .header-area .main-nav .nav,
+        .background-header .main-nav .nav {
           display: none;
           position: absolute !important;
           top: 72px !important;
@@ -380,24 +421,95 @@
           margin-top: -30px !important;
         }
 
-        /* Fun facts on mobile */
-        .fun-facts .counter {
-          padding: 18px 10px !important;
-          margin-bottom: 15px !important;
-        }
-        .fun-facts .counter h2 {
-          font-size: 32px !important;
-        }
-        .fun-facts .counter p {
-          font-size: 12px !important;
-        }
-
         /* Contact & Map adjustments */
         .contact-content .item {
           margin-bottom: 15px !important;
         }
         #map iframe {
           height: 280px !important;
+        }
+      }
+
+      /* Logo scaling on extra-small mobile screens */
+      @media (max-width: 576px) {
+        .logo-mark {
+          width: 34px !important;
+          height: 34px !important;
+          font-size: 13px !important;
+          border-radius: 7px !important;
+          border-left-width: 3px !important;
+        }
+        .logo-title {
+          font-size: 16px !important;
+          letter-spacing: 1px !important;
+        }
+        .logo-subtitle {
+          font-size: 7.5px !important;
+          letter-spacing: 1px !important;
+        }
+      }
+
+      /* Fun Facts Section - Clean, Modern, Pixel-Perfect Responsiveness */
+      .fun-facts {
+        margin-top: 60px !important;
+      }
+      .fun-facts .counter {
+        width: 100% !important;
+        max-width: 100% !important;
+        background: #ffffff !important;
+        border: 1px solid rgba(243, 85, 37, 0.18) !important;
+        border-top: 3.5px solid #f35525 !important;
+        border-radius: 12px !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04) !important;
+        padding: 18px 12px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 12px !important;
+        position: relative !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
+        margin-bottom: 20px !important;
+        transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+      }
+      .fun-facts .counter:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 8px 20px rgba(243, 85, 37, 0.12) !important;
+      }
+      .fun-facts .counter:after {
+        display: none !important;
+      }
+      .fun-facts .counter h2 {
+        margin: 0 !important;
+        font-size: 38px !important;
+        font-weight: 800 !important;
+        color: #f35525 !important;
+        line-height: 1 !important;
+        flex-shrink: 0 !important;
+      }
+      .fun-facts .counter p {
+        margin: 0 !important;
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        color: #1e1e1e !important;
+        line-height: 1.3 !important;
+        text-align: left !important;
+      }
+      @media (max-width: 576px) {
+        .fun-facts {
+          margin-top: 35px !important;
+        }
+        .fun-facts .counter {
+          padding: 14px 8px !important;
+          gap: 8px !important;
+          margin-bottom: 12px !important;
+        }
+        .fun-facts .counter h2 {
+          font-size: 26px !important;
+        }
+        .fun-facts .counter p {
+          font-size: 11px !important;
+          line-height: 1.2 !important;
         }
       }
 
@@ -516,13 +628,8 @@
         body {
           padding-bottom: 65px !important;
         }
+        /* Hide floating bubble on mobile: sticky bottom bar already has a prominent WhatsApp action */
         .whatsapp-float-btn {
-          bottom: 75px !important;
-          right: 15px !important;
-          padding: 12px !important;
-          border-radius: 50% !important;
-        }
-        .whatsapp-float-label {
           display: none !important;
         }
         .mobile-bottom-bar {
@@ -565,6 +672,56 @@
         }
         .mobile-bar-action.book-action {
           color: #f35525 !important;
+        }
+
+        /* Contact Items, Cards & Forms on Mobile */
+        .contact-page .item,
+        .contact-content .item {
+          min-width: 0 !important;
+          width: 100% !important;
+          padding: 20px 15px !important;
+          margin: 0 0 15px 0 !important;
+          box-sizing: border-box !important;
+        }
+        .contact-content #contact-form,
+        .contact-page #contact-form {
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+          margin-top: 25px !important;
+          padding: 25px 20px !important;
+        }
+
+        /* Modal Dialog on Mobile */
+        .modal-dialog {
+          margin: 12px !important;
+        }
+        .modal-content {
+          border-radius: 14px !important;
+        }
+        .modal-header {
+          padding: 14px 18px !important;
+        }
+        .modal-header h4 {
+          font-size: 17px !important;
+        }
+        .modal-body {
+          padding: 16px 14px !important;
+        }
+
+        /* Owl Carousel Arrows on Mobile */
+        .main-banner .owl-nav .owl-prev i {
+          left: 8px !important;
+          width: 36px !important;
+          height: 36px !important;
+          line-height: 36px !important;
+          font-size: 15px !important;
+        }
+        .main-banner .owl-nav .owl-next i {
+          right: 8px !important;
+          width: 36px !important;
+          height: 36px !important;
+          line-height: 36px !important;
+          font-size: 15px !important;
         }
       }
     </style>
