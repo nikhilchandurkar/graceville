@@ -88,12 +88,81 @@
         position: relative;
       }
 
+      /* Header Brand Emblem & Typography */
+      .header-logo {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 12px !important;
+        text-decoration: none !important;
+        height: 100% !important;
+      }
+      .logo-mark {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 44px !important;
+        height: 44px !important;
+        background: #1e1e1e !important;
+        color: #ffffff !important;
+        font-size: 16px !important;
+        font-weight: 800 !important;
+        letter-spacing: 1.5px !important;
+        border-radius: 10px !important;
+        border-left: 4px solid #f35525 !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12) !important;
+        flex-shrink: 0 !important;
+        transition: all 0.3s ease !important;
+      }
+      .header-logo:hover .logo-mark {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 16px rgba(243, 85, 37, 0.35) !important;
+        border-left-color: #f35525 !important;
+      }
+      .logo-text-group {
+        display: inline-flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        line-height: 1.15 !important;
+      }
+      .logo-title {
+        font-size: 21px !important;
+        font-weight: 800 !important;
+        letter-spacing: 1.8px !important;
+        color: #1e1e1e !important;
+        text-transform: uppercase !important;
+        white-space: nowrap !important;
+        margin: 0 !important;
+      }
+      .logo-title .logo-accent {
+        color: #f35525 !important;
+      }
+      .logo-subtitle {
+        font-size: 9px !important;
+        font-weight: 600 !important;
+        letter-spacing: 2px !important;
+        color: #888888 !important;
+        text-transform: uppercase !important;
+        white-space: nowrap !important;
+        margin-top: 2px !important;
+      }
+
       /* Desktop Layout (min-width: 992px) */
       @media (min-width: 992px) {
+        .header-area {
+          box-shadow: 0 2px 15px rgba(0, 0, 0, 0.04) !important;
+          border-bottom: 1px solid #f0f0f0 !important;
+        }
+        .background-header {
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+        }
         .header-area .main-nav {
           display: flex !important;
           align-items: center !important;
           justify-content: space-between !important;
+          height: 100px !important;
+        }
+        .background-header .main-nav {
+          height: 80px !important;
         }
         .header-area .main-nav .logo {
           white-space: nowrap !important;
@@ -101,7 +170,9 @@
           display: flex !important;
           align-items: center !important;
           margin-right: 15px !important;
+          margin-right: 20px !important;
           text-decoration: none !important;
+          height: 100% !important;
         }
         .header-area .main-nav .logo h1 {
           font-size: 24px !important;
@@ -123,22 +194,75 @@
           margin-top: 0 !important;
           display: flex !important;
           align-items: center !important;
+          height: 100% !important;
         }
         .header-area .main-nav .nav li {
           padding-left: 6px !important;
           padding-right: 6px !important;
+          display: flex !important;
+          align-items: center !important;
+          height: 100% !important;
         }
         .header-area .main-nav .nav li a {
           padding-left: 12px !important;
           padding-right: 12px !important;
+          padding-left: 14px !important;
+          padding-right: 14px !important;
           font-size: 14px !important;
+          font-weight: 500 !important;
+          letter-spacing: 0.3px !important;
+          color: #1e1e1e !important;
+          transition: all 0.25s ease !important;
+          border-radius: 8px !important;
+        }
+        .header-area .main-nav .nav li a:hover,
+        .header-area .main-nav .nav li a.active {
+          color: #f35525 !important;
+        }
+        .header-area .main-nav .nav li:last-child a {
+          background: #1e1e1e !important;
+          color: #ffffff !important;
+          font-weight: 600 !important;
+          font-size: 13.5px !important;
+          border-radius: 25px !important;
+          padding: 0 18px 0 0 !important;
+          height: 42px !important;
+          line-height: 42px !important;
+          display: inline-flex !important;
+          align-items: center !important;
+          box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12) !important;
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+        .header-area .main-nav .nav li:last-child a i {
+          background: #f35525 !important;
+          color: #ffffff !important;
+          width: 42px !important;
+          height: 42px !important;
+          line-height: 42px !important;
+          border-radius: 50% !important;
+          margin-right: 10px !important;
+          box-shadow: 0 2px 8px rgba(243, 85, 37, 0.3) !important;
+          transition: all 0.3s ease !important;
+        }
+        .header-area .main-nav .nav li:last-child a:hover {
+          background: #f35525 !important;
+          color: #ffffff !important;
+          transform: translateY(-2px) !important;
+          box-shadow: 0 6px 20px rgba(243, 85, 37, 0.4) !important;
+        }
+        .header-area .main-nav .nav li:last-child a:hover i {
+          background: #1e1e1e !important;
         }
       }
 
       /* Mobile & Tablet Layout (max-width: 991px) */
       @media (max-width: 991px) {
+        .sub-header {
+          display: none !important;
+        }
         .header-area {
           height: 75px !important;
+          height: 72px !important;
           padding: 0 15px !important;
           position: fixed !important;
           top: 0 !important;
@@ -150,6 +274,7 @@
         }
         .header-area .main-nav {
           height: 75px !important;
+          height: 72px !important;
           display: flex !important;
           align-items: center !important;
           justify-content: space-between !important;
@@ -168,6 +293,20 @@
           margin: 0 !important;
           color: #1e1e1e !important;
           white-space: nowrap !important;
+        .logo-mark {
+          width: 38px !important;
+          height: 38px !important;
+          font-size: 14px !important;
+          border-radius: 8px !important;
+          border-left-width: 3.5px !important;
+        }
+        .logo-title {
+          font-size: 18px !important;
+          letter-spacing: 1.4px !important;
+        }
+        .logo-subtitle {
+          font-size: 8px !important;
+          letter-spacing: 1.5px !important;
         }
         .header-area .main-nav .menu-trigger {
           display: block !important;
@@ -188,6 +327,7 @@
           display: none;
           position: absolute !important;
           top: 75px !important;
+          top: 72px !important;
           left: -15px !important;
           width: calc(100% + 30px) !important;
           background: #ffffff !important;
@@ -283,6 +423,44 @@
         #map iframe {
           height: 280px !important;
         }
+      }
+
+      /* High-Definition Crisp Imagery & Image Cards */
+      img {
+        image-rendering: -webkit-optimize-contrast;
+      }
+      .properties .item {
+        background-color: #ffffff !important;
+        border: 1px solid #eeeeee !important;
+        border-radius: 14px !important;
+        padding: 22px !important;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04) !important;
+        transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        overflow: hidden;
+      }
+      .properties .item:hover {
+        transform: translateY(-5px) !important;
+        box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1) !important;
+        border-color: #fbd9cf !important;
+      }
+      .properties .item img {
+        border-radius: 10px !important;
+        width: 100% !important;
+        height: 230px !important;
+        object-fit: cover !important;
+        transition: transform 0.4s ease !important;
+      }
+      .properties .item:hover img {
+        transform: scale(1.025) !important;
+      }
+      .featured .left-image img {
+        border-radius: 16px !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12) !important;
+        object-fit: cover !important;
+      }
+      #villaPhotoCarousel .carousel-item img {
+        border-radius: 14px !important;
+        object-fit: cover !important;
       }
 
       .badge-pill {
@@ -448,14 +626,18 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-9 col-md-9">
+      <div class="row align-items-center">
+        <div class="col-lg-8 col-md-8">
           <ul class="info">
             <li><span style="color: #4a4a4a; font-weight: 500;"><i class="fa fa-phone" style="color: #f35525;"></i> {{ WHATSAPP_PHONE_FORMATTED }}</span></li>
             <li><span style="color: #4a4a4a; font-weight: 500;"><i class="fa fa-user" style="color: #f35525;"></i> {{ OWNER_PHONE_FORMATTED }} (Owner)</span></li>
             <li><a href="mailto:graceville1911@gmail.com" style="color: inherit;" title="Send an Email"><i class="fa fa-envelope" style="color: #f35525;"></i> graceville1911@gmail.com</a></li>
             <li><a href="https://maps.app.goo.gl/XPxZYJUyNyA1UPX79" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline;" title="Open in Google Maps"><i class="fa fa-map-marker-alt" style="color: #f35525;"></i> Udachiwadi, Saswad (33 km from Pune)</a></li>
+            <li><a href="https://maps.app.goo.gl/XPxZYJUyNyA1UPX79" target="_blank" rel="noopener noreferrer" style="color: inherit;" title="Open in Google Maps"><i class="fa fa-map-marker-alt" style="color: #f35525;"></i> Saswad (33 km from Pune)</a></li>
           </ul>
         </div>
         <div class="col-lg-3 col-md-3">
+        <div class="col-lg-4 col-md-4">
           <ul class="social-links">
             <li><a href="https://maps.app.goo.gl/XPxZYJUyNyA1UPX79" target="_blank" rel="noopener noreferrer" title="View on Google Maps"><i class="fa fa-map"></i></a></li>
             <li><a href="{{ WHATSAPP_CHAT_URL }}" target="_blank" title="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a></li>
@@ -478,6 +660,12 @@
                     <!-- ***** Logo Start ***** -->
                     <a href="{% url 'index' %}" class="logo">
                         <h1>Grace Ville</h1>
+                    <a href="{% url 'index' %}" class="logo header-logo">
+                        <span class="logo-mark">GV</span>
+                        <div class="logo-text-group">
+                            <span class="logo-title">GRACE <span class="logo-accent">VILLE</span></span>
+                            <span class="logo-subtitle">Private Sanctuary &bull; Saswad</span>
+                        </div>
                     </a>
                     <!-- ***** Logo End ***** -->
                     <!-- ***** Menu Start ***** -->
@@ -487,6 +675,7 @@
                       <li><a href="{% url 'property_details' %}" class="{% if active_page == 'property_details' %}active{% endif %}">Villa Details</a></li>
                       <li><a href="{% url 'contact' %}" class="{% if active_page == 'contact' %}active{% endif %}">Contact &amp; Location</a></li>
                       <li><a href="#appointmentModal" data-bs-toggle="modal" data-bs-target="#appointmentModal"><i class="fa fa-calendar"></i> Schedule a Visit</a></li>
+                      <li><a href="#appointmentModal" data-bs-toggle="modal" data-bs-target="#appointmentModal"><i class="fa fa-calendar-check"></i> Schedule a Visit</a></li>
                   </ul>   
                     <a class='menu-trigger'>
                         <span>Menu</span>
