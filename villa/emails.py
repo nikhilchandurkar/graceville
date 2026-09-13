@@ -10,14 +10,13 @@ def get_receiver_emails():
     Returns list of recipient emails configured via environment or settings.
     Supports comma-separated emails.
     """
-    raw_receivers = os.environ.get('NOTIFICATION_RECEIVER_EMAIL') or getattr(settings, 'NOTIFICATION_RECEIVER_EMAIL', '')
+    raw_receivers = os.environ.get('NOTIFICATION_RECEIVER_EMAIL') or getattr(settings, 'NOTIFICATION_RECEIVER_EMAIL', 'graceville1911@gmail.com')
     if not raw_receivers:
-        from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'reservations@graceville.in')
-        return [from_email]
+        return ['graceville1911@gmail.com']
     
     # Split by comma or semicolon and strip whitespace
     emails = [e.strip() for e in raw_receivers.replace(';', ',').split(',') if e.strip()]
-    return emails if emails else [getattr(settings, 'DEFAULT_FROM_EMAIL', 'reservations@graceville.in')]
+    return emails if emails else ['graceville1911@gmail.com']
 
 def send_inquiry_notification(inquiry):
     """
@@ -25,7 +24,7 @@ def send_inquiry_notification(inquiry):
     Also sends confirmation email to the guest if their email is provided.
     """
     receivers = get_receiver_emails()
-    from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'Grace Ville <reservations@graceville.in>')
+    from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'Grace Ville <graceville1911@gmail.com>')
 
     # 1. Email to Villa Management / Host
     subject = f"🔔 New Booking Inquiry: {inquiry.reference_id} - {inquiry.full_name}"
@@ -118,7 +117,7 @@ def send_contact_message_notification(contact_msg):
     Sends email notification to the villa managers when a general contact message is sent.
     """
     receivers = get_receiver_emails()
-    from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'Grace Ville <reservations@graceville.in>')
+    from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'Grace Ville <graceville1911@gmail.com>')
 
     subject = f"✉️ Contact Message from {contact_msg.full_name}: {contact_msg.subject or 'General Inquiry'}"
     body = f"""Hello Grace Ville Team,

@@ -153,10 +153,11 @@ EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True').lower() in ('true', '1',
 EMAIL_USE_SSL = os.environ.get('EMAIL_USE_SSL', 'False').lower() in ('true', '1', 'yes')
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'Grace Ville <reservations@graceville.in>')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'Grace Ville <graceville1911@gmail.com>')
 
-# Notification Receiver Emails (Supports comma-separated emails, e.g. xyz@gmail.com,owner@graceville.in)
-NOTIFICATION_RECEIVER_EMAIL = os.environ.get('NOTIFICATION_RECEIVER_EMAIL', '')
+# Notification Receiver Emails (Supports comma-separated emails, e.g. graceville1911@gmail.com,xyz@gmail.com)
+NOTIFICATION_RECEIVER_EMAIL = os.environ.get('NOTIFICATION_RECEIVER_EMAIL', 'graceville1911@gmail.com')
+CONTACT_EMAIL = os.environ.get('CONTACT_EMAIL', 'graceville1911@gmail.com')
 
 # WhatsApp Host / Concierge Phone (International format without '+' sign)
 WHATSAPP_PHONE = os.environ.get('WHATSAPP_PHONE', '917768956163')

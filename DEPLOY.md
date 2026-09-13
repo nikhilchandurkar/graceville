@@ -50,8 +50,9 @@ In the `app/` folder, inspect or create your `.env` file (or prepare these for V
 | `DEBUG` | Debug mode (`False` in production) | `False` |
 | `ALLOWED_HOSTS` | Allowed host domains | `.vercel.app,localhost,127.0.0.1` |
 | `CSRF_TRUSTED_ORIGINS` | Trusted origins for form POSTs | `https://*.vercel.app` |
-| `WHATSAPP_PHONE` | Host WhatsApp number without `+` | `919876543210` |
-| `NOTIFICATION_RECEIVER_EMAIL` | **Where to send booking alerts** (can be comma-separated) | `xyz@gmail.com,host@graceville.in` |
+| `WHATSAPP_PHONE` | Host WhatsApp number without `+` | `917768956163` |
+| `OWNER_PHONE` | Owner direct contact number without `+` | `919699825732` |
+| `NOTIFICATION_RECEIVER_EMAIL` | **Where to send booking alerts** (can be comma-separated) | `graceville1911@gmail.com,nikhilchandurkar24@gmail.com` |
 | `EMAIL_BACKEND` | Django email backend | `django.core.mail.backends.smtp.EmailBackend` |
 | `EMAIL_HOST` | SMTP server host | `smtp.gmail.com` |
 | `EMAIL_PORT` | SMTP port | `587` |
@@ -122,22 +123,22 @@ git push -u origin main
 3. Import your **`graceville-villa`** repository.
 4. In the Project Configuration screen:
    - **Framework Preset**: Leave as *Other*.
-   - **Root Directory**: Leave as `./` (or `app` if you pushed the parent directory).
    - **Root Directory**: Leave as `./` (default).
 5. Expand the **Environment Variables** section and add the keys from your `.env`:
    - `SECRET_KEY`: *(paste your secret key)*
    - `DEBUG`: `False`
    - `ALLOWED_HOSTS`: `.vercel.app`
    - `CSRF_TRUSTED_ORIGINS`: `https://*.vercel.app`
-   - `NOTIFICATION_RECEIVER_EMAIL`: `xyz@gmail.com` *(your desired email to receive inquiries)*
-   - `WHATSAPP_PHONE`: `919876543210` *(your host phone)*
+   - `NOTIFICATION_RECEIVER_EMAIL`: `graceville1911@gmail.com,nikhilchandurkar24@gmail.com`
+   - `WHATSAPP_PHONE`: `917768956163`
+   - `OWNER_PHONE`: `919699825732`
    - `EMAIL_BACKEND`: `django.core.mail.backends.smtp.EmailBackend`
    - `EMAIL_HOST`: `smtp.gmail.com`
    - `EMAIL_PORT`: `587`
    - `EMAIL_USE_TLS`: `True`
-   - `EMAIL_HOST_USER`: `your-gmail@gmail.com`
-   - `EMAIL_HOST_PASSWORD`: `your-16-char-app-password`
-   - `DEFAULT_FROM_EMAIL`: `Grace Ville <your-gmail@gmail.com>`
+   - `EMAIL_HOST_USER`: `nikhilchandurkar24@gmail.com`
+   - `EMAIL_HOST_PASSWORD`: `rhlavdkyccvnutgt`
+   - `DEFAULT_FROM_EMAIL`: `Grace Ville Reservations <nikhilchandurkar24@gmail.com>`
    - `MONGODB_URI`: *(your MongoDB Atlas URI from Step 2)*
 6. Click **Deploy**!
 7. In ~60 seconds, Vercel will build your static files and deploy your live URL (e.g. `https://graceville-villa.vercel.app`).
