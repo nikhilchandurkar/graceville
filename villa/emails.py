@@ -27,7 +27,7 @@ def send_inquiry_notification(inquiry):
     from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'Grace Ville <graceville1911@gmail.com>')
 
     # 1. Email to Villa Management / Host
-    subject = f"🔔 New Booking Inquiry: {inquiry.reference_id} - {inquiry.full_name}"
+    subject = f"New Booking Inquiry: {inquiry.reference_id} - {inquiry.full_name}"
     
     body = f"""Hello Grace Ville Team,
 
@@ -119,7 +119,7 @@ def send_contact_message_notification(contact_msg):
     receivers = get_receiver_emails()
     from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'Grace Ville <graceville1911@gmail.com>')
 
-    subject = f"✉️ Contact Message from {contact_msg.full_name}: {contact_msg.subject or 'General Inquiry'}"
+    subject = f"Contact Message from {contact_msg.full_name}: {contact_msg.subject or 'General Inquiry'}"
     body = f"""Hello Grace Ville Team,
 
 A visitor has submitted a contact message through the Grace Ville website.

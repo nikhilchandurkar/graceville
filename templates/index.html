@@ -484,25 +484,19 @@
               </div>
               <div class="col-lg-12">
                 <fieldset>
-                  <label for="stay_type">Stay Type</label>
                   <label for="stay_type">Appointment / Booking Type</label>
                   <select name="stay_type" id="stay_type" class="form-control mb-3" style="height: 44px; border-radius: 22px; border: 1px solid #eee; padding: 0 20px;">
-                    <option value="Overnight Stay (Check-in 12 PM, Check-out 11 AM)">Overnight Stay (Check-in 12:00 PM, Check-out 11:00 AM)</option>
-                    <option value="Day Outing (Lunch, High Tea / Dinner, Pool)">Day Outing (Lunch, High Tea / Dinner, Pool)</option>
-                    <option value="Family Celebration / Event">Family Celebration / Get-together</option>
-                    <option value="visit">🗓️ Pre-Visit / Site Inspection Appointment</option>
-                    <option value="Overnight Stay (Check-in 12 PM, Check-out 11 AM)" selected>🏡 Overnight Private Villa Stay (3 AC Beds + Dorm)</option>
-                    <option value="Day Outing (Lunch, High Tea / Dinner, Pool)">☀️ Day Outing Package (Lunch, High Tea, Pool)</option>
-                    <option value="Family Celebration / Event">🎉 Family Celebration / Get-together</option>
+                    <option value="visit">Pre-Visit / Site Inspection Appointment</option>
+                    <option value="overnight" selected>Overnight Private Villa Stay (3 AC Bedrooms + Dormitory)</option>
+                    <option value="day_outing">Day Outing Package (Lunch, Pool, High Tea)</option>
+                    <option value="celebration">Family Celebration / Private Event</option>
                   </select>
                 </fieldset>
               </div>
               <div class="col-lg-12">
                 <fieldset>
-                  <label for="message">Dates &amp; Guest Count / Requirements</label>
-                  <textarea name="message" id="message" placeholder="Preferred dates, expected number of guests, meal requirements..."></textarea>
                   <label for="date">Preferred Date</label>
-                  <input type="date" name="date" id="date" class="form-control mb-3" style="height: 44px; border-radius: 22px; border: 1px solid #eee; padding: 0 20px;">
+                  <input type="date" name="date" id="date" required class="form-control mb-3" style="height: 44px; border-radius: 22px; border: 1px solid #eee; padding: 0 20px;">
                 </fieldset>
               </div>
               <div class="col-lg-12">
@@ -514,12 +508,11 @@
               <div class="col-lg-12">
                 <fieldset>
                   <button type="submit" id="form-submit" class="orange-button w-100 mb-3">Submit Booking Inquiry</button>
-                  <a id="whatsapp-quick" href="https://wa.me/?text=Hi%20Grace%20Ville%2C%20I%20would%20like%20to%20inquire%20about%20booking%20the%20villa." target="_blank" class="whatsapp-btn w-100 justify-content-center">
                   <a id="whatsapp-quick" href="{{ WHATSAPP_CHAT_URL }}" target="_blank" class="whatsapp-btn w-100 justify-content-center">
                     <i class="fab fa-whatsapp fa-lg"></i> Instant WhatsApp Booking
                   </a>
                 </fieldset>
-                <div id="form-feedback" class="alert alert-success form-alert text-center mt-3"></div>
+                <div id="form-feedback" class="alert form-alert text-center mt-3" style="display: none;"></div>
               </div>
             </div>
           </form>
@@ -533,17 +526,52 @@
 <script>
   function submitDjangoBooking(e) {
     e.preventDefault();
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const phone = document.getElementById('phone').value;
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
     const stayType = document.getElementById('stay_type').value;
-    const date = document.getElementById('date') ? document.getElementById('date').value : '';
-    const message = document.getElementById('message').value;
+    const dateInput = document.getElementById('date');
+    const date = dateInput ? dateInput.value : '';
+    const message = document.getElementById('message').value.trim();
     const submitBtn = document.getElementById('form-submit');
     const feedback = document.getElementById('form-feedback');
 
+    // UI Validations
+    const today = new Date().toISOString().split('T')[0];
+    if (!name || name.length < 2) {
+      feedback.style.display = 'block';
+      feedback.className = 'alert alert-danger form-alert text-center mt-3';
+      feedback.innerText = 'Please enter your full name (at least 2 characters).';
+      return;
+    }
+    const digits = phone.replace(/\D/g, '');
+    if (digits.length < 10) {
+      feedback.style.display = 'block';
+      feedback.className = 'alert alert-danger form-alert text-center mt-3';
+      feedback.innerText = 'Please enter a valid 10-digit phone or WhatsApp number.';
+      return;
+    }
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      feedback.style.display = 'block';
+      feedback.className = 'alert alert-danger form-alert text-center mt-3';
+      feedback.innerText = 'Please enter a valid email address.';
+      return;
+    }
+    if (!date) {
+      feedback.style.display = 'block';
+      feedback.className = 'alert alert-danger form-alert text-center mt-3';
+      feedback.innerText = 'Please select a preferred date for your appointment or stay.';
+      return;
+    }
+    if (date < today) {
+      feedback.style.display = 'block';
+      feedback.className = 'alert alert-danger form-alert text-center mt-3';
+      feedback.innerText = 'Booking date cannot be in the past. Please select today or a future date.';
+      return;
+    }
+
     submitBtn.disabled = true;
-    submitBtn.innerText = 'Saving Booking to Database...';
+    submitBtn.innerText = 'Submitting Booking...';
 
     const formData = new FormData();
     formData.append('name', name);
@@ -558,31 +586,41 @@
       method: 'POST',
       body: formData
     })
-    .then(res => res.json())
-    .then(data => {
+    .then(res => res.json().then(data => ({ status: res.status, body: data })))
+    .then(({ status, body }) => {
+      if (status !== 200 || body.status === 'error') {
+        feedback.style.display = 'block';
+        feedback.className = 'alert alert-danger form-alert text-center mt-3';
+        feedback.innerText = body.error || 'Failed to submit inquiry. Please try again.';
+        submitBtn.disabled = false;
+        submitBtn.innerText = 'Submit Booking Inquiry';
+        return;
+      }
+
       feedback.style.display = 'block';
       feedback.className = 'alert alert-success form-alert text-center mt-3';
       feedback.innerHTML = `
-        <div style="font-size: 16px; margin-bottom: 8px;"><strong>🎉 Booking / Appointment Saved!</strong></div>
-        <div>Booking Reference: <span style="background: #fff; color: #f35525; padding: 2px 8px; border-radius: 4px; font-weight: bold;">${data.reference_id}</span></div>
-        <p class="mt-2 mb-3" style="font-size: 14px;">Thank you <strong>${name}</strong>. An email notification has been dispatched. Click below to verify instantly on WhatsApp:</p>
-        <a href="${data.whatsapp_url}" target="_blank" class="whatsapp-btn justify-content-center" style="display: inline-flex; width: auto; padding: 8px 18px; font-size: 14px;">
-          <i class="fab fa-whatsapp"></i> Confirm via WhatsApp Now
+        <div style="font-size: 16px; margin-bottom: 8px;"><strong>Inquiry Received Successfully</strong></div>
+        <div>Booking Reference: <span style="background: #fff; color: #f35525; padding: 2px 8px; border-radius: 4px; font-weight: bold;">${body.reference_id}</span></div>
+        <p class="mt-2 mb-3" style="font-size: 14px;">Thank you <strong>${name}</strong>. An email notification has been dispatched. Click below to continue directly on WhatsApp:</p>
+        <a href="${body.whatsapp_url}" target="_blank" class="whatsapp-btn justify-content-center" style="display: inline-flex; width: auto; padding: 8px 18px; font-size: 14px;">
+          <i class="fab fa-whatsapp"></i> Confirm on WhatsApp
         </a>
       `;
-      submitBtn.innerText = 'Saved to Database';
+      submitBtn.innerText = 'Inquiry Registered';
 
       // Update WhatsApp quick link with pre-filled message
       const waBtn = document.getElementById('whatsapp-quick');
-      if (waBtn && data.whatsapp_url) {
-        waBtn.href = data.whatsapp_url;
+      if (waBtn && body.whatsapp_url) {
+        waBtn.href = body.whatsapp_url;
       }
     })
     .catch(err => {
       feedback.style.display = 'block';
-      feedback.className = 'alert alert-warning form-alert text-center mt-3';
-      feedback.innerHTML = `<strong>Inquiry Received!</strong><br>Thank you ${name}. Our team will contact you at ${phone}.`;
-      submitBtn.innerText = 'Inquiry Received';
+      feedback.className = 'alert alert-danger form-alert text-center mt-3';
+      feedback.innerText = 'Network error. Please check your connection or contact us directly on WhatsApp.';
+      submitBtn.disabled = false;
+      submitBtn.innerText = 'Submit Booking Inquiry';
     });
   }
 </script>

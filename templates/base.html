@@ -353,10 +353,10 @@
               <div class="col-md-6">
                 <label class="form-label fw-bold" style="font-size: 13px;">Appointment / Booking Type *</label>
                 <select id="modal_stay_type" class="form-select" required style="border-radius: 8px; padding: 10px 14px;">
-                  <option value="visit">🗓️ Pre-Visit / Site Inspection Appointment</option>
-                  <option value="overnight" selected>🏡 Overnight Private Villa Stay (3 AC Beds + Dorm)</option>
-                  <option value="day_outing">☀️ Day Outing Package (Lunch, Pool, High Tea)</option>
-                  <option value="celebration">🎉 Family Celebration / Event / Get-Together</option>
+                  <option value="visit">Pre-Visit / Site Inspection Appointment</option>
+                  <option value="overnight" selected>Overnight Private Villa Stay (3 AC Bedrooms + Dormitory)</option>
+                  <option value="day_outing">Day Outing Package (Lunch, Pool, High Tea)</option>
+                  <option value="celebration">Family Celebration / Private Event</option>
                 </select>
               </div>
               <div class="col-md-4">
@@ -397,21 +397,72 @@
   </div>
 
   <script>
+    // Universal Date Picker Min-Date Setter (Blocks past dates across all inputs)
+    document.addEventListener('DOMContentLoaded', function() {
+      const today = new Date().toISOString().split('T')[0];
+      document.querySelectorAll('input[type="date"]').forEach(function(dateInput) {
+        dateInput.setAttribute('min', today);
+        dateInput.addEventListener('change', function() {
+          if (this.value && this.value < today) {
+            this.setCustomValidity('Please select today or an upcoming date.');
+            this.classList.add('is-invalid');
+          } else {
+            this.setCustomValidity('');
+            this.classList.remove('is-invalid');
+          }
+        });
+      });
+    });
+
     function submitModalAppointment(e) {
       e.preventDefault();
       const submitBtn = document.getElementById('modal-submit-btn');
       const feedback = document.getElementById('modal-feedback');
-      const name = document.getElementById('modal_name').value;
-      const phone = document.getElementById('modal_phone').value;
-      const email = document.getElementById('modal_email').value;
+      const name = document.getElementById('modal_name').value.trim();
+      const phone = document.getElementById('modal_phone').value.trim();
+      const email = document.getElementById('modal_email').value.trim();
       const stayType = document.getElementById('modal_stay_type').value;
       const date = document.getElementById('modal_date').value;
       const timeSlot = document.getElementById('modal_time_slot').value;
       const guests = document.getElementById('modal_guests').value;
-      const message = document.getElementById('modal_message').value;
+      const message = document.getElementById('modal_message').value.trim();
+
+      // UI Validations
+      const today = new Date().toISOString().split('T')[0];
+      if (!name || name.length < 2) {
+        feedback.style.display = 'block';
+        feedback.className = 'alert alert-danger text-center mt-3';
+        feedback.innerText = 'Please enter your full name (at least 2 characters).';
+        return;
+      }
+      const digits = phone.replace(/\D/g, '');
+      if (digits.length < 10) {
+        feedback.style.display = 'block';
+        feedback.className = 'alert alert-danger text-center mt-3';
+        feedback.innerText = 'Please enter a valid 10-digit phone or WhatsApp number.';
+        return;
+      }
+      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        feedback.style.display = 'block';
+        feedback.className = 'alert alert-danger text-center mt-3';
+        feedback.innerText = 'Please enter a valid email address.';
+        return;
+      }
+      if (!date) {
+        feedback.style.display = 'block';
+        feedback.className = 'alert alert-danger text-center mt-3';
+        feedback.innerText = 'Please select a preferred date for your appointment or stay.';
+        return;
+      }
+      if (date < today) {
+        feedback.style.display = 'block';
+        feedback.className = 'alert alert-danger text-center mt-3';
+        feedback.innerText = 'Booking date cannot be in the past. Please select today or a future date.';
+        return;
+      }
 
       submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Saving Appointment...';
+      submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Registering Appointment...';
 
       const formData = new FormData();
       formData.append('name', name);
@@ -428,28 +479,37 @@
         method: 'POST',
         body: formData
       })
-      .then(res => res.json())
-      .then(data => {
+      .then(res => res.json().then(data => ({ status: res.status, body: data })))
+      .then(({ status, body }) => {
+        if (status !== 200 || body.status === 'error') {
+          feedback.style.display = 'block';
+          feedback.className = 'alert alert-danger text-center mt-3';
+          feedback.innerText = body.error || 'Failed to submit inquiry. Please try again.';
+          submitBtn.innerHTML = '<i class="fa fa-calendar-check me-2"></i> Confirm Appointment / Booking';
+          submitBtn.disabled = false;
+          return;
+        }
+
         feedback.style.display = 'block';
         feedback.className = 'alert alert-success text-center mt-3';
         feedback.innerHTML = `
-          <div style="font-size: 17px; margin-bottom: 6px;"><strong>🎉 Appointment Confirmed!</strong></div>
-          <div>Booking Ref: <span style="background: #fff; color: #f35525; padding: 3px 10px; border-radius: 6px; font-weight: bold;">${data.reference_id}</span></div>
-          <p class="mt-2 mb-3" style="font-size: 13px;">Thank you <strong>${name}</strong>. An email notification has been dispatched. Click below to verify and chat directly with our concierge on WhatsApp:</p>
-          <a href="${data.whatsapp_url}" target="_blank" class="whatsapp-btn justify-content-center" style="display: inline-flex; width: auto; padding: 10px 22px; font-size: 14px;">
-            <i class="fab fa-whatsapp"></i> Chat on WhatsApp with Ref
+          <div style="font-size: 17px; margin-bottom: 6px;"><strong>Appointment Confirmed</strong></div>
+          <div>Booking Reference: <span style="background: #fff; color: #f35525; padding: 3px 10px; border-radius: 6px; font-weight: bold;">${body.reference_id}</span></div>
+          <p class="mt-2 mb-3" style="font-size: 13px;">Thank you <strong>${name}</strong>. Your inquiry has been dispatched to our reservations team. Click below to continue directly on WhatsApp:</p>
+          <a href="${body.whatsapp_url}" target="_blank" class="whatsapp-btn justify-content-center" style="display: inline-flex; width: auto; padding: 10px 22px; font-size: 14px;">
+            <i class="fab fa-whatsapp"></i> Chat on WhatsApp with Reference
           </a>
         `;
-        submitBtn.innerHTML = '<i class="fa fa-check"></i> Appointment Registered';
+        submitBtn.innerHTML = '<i class="fa fa-check"></i> Registered Successfully';
         const waBtn = document.getElementById('modal-wa-btn');
-        if (waBtn && data.whatsapp_url) {
-          waBtn.href = data.whatsapp_url;
+        if (waBtn && body.whatsapp_url) {
+          waBtn.href = body.whatsapp_url;
         }
       })
       .catch(err => {
         feedback.style.display = 'block';
-        feedback.className = 'alert alert-warning text-center mt-3';
-        feedback.innerHTML = `<strong>Appointment Received!</strong><br>Thank you ${name}. Our concierge will contact you at ${phone}.`;
+        feedback.className = 'alert alert-danger text-center mt-3';
+        feedback.innerText = 'Network error. Please check your connection or contact us directly on WhatsApp.';
         submitBtn.innerHTML = '<i class="fa fa-calendar-check me-2"></i> Confirm Appointment / Booking';
         submitBtn.disabled = false;
       });

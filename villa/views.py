@@ -216,14 +216,78 @@ def api_book(request):
     AJAX endpoint for instant booking inquiry submission.
     Saves to database, dispatches SMTP email, syncs to MongoDB Atlas, and returns WhatsApp link.
     """
-    full_name = request.POST.get('name') or request.POST.get('full_name') or 'Guest'
-    email = request.POST.get('email', '')
-    phone = request.POST.get('phone', '')
+    import re
+    from datetime import datetime
+    from django.utils import timezone
+    from django.core.validators import validate_email
+    from django.core.exceptions import ValidationError
+
+    full_name = (request.POST.get('name') or request.POST.get('full_name') or '').strip()
+    email = (request.POST.get('email') or '').strip()
+    phone = (request.POST.get('phone') or '').strip()
     stay_type = request.POST.get('stay_type', 'overnight')
-    raw_date = request.POST.get('date') or request.POST.get('visit_date') or request.POST.get('check_in_date') or ''
-    time_slot = request.POST.get('time_slot', '')
+    raw_date = (request.POST.get('date') or request.POST.get('visit_date') or request.POST.get('check_in_date') or '').strip()
+    time_slot = (request.POST.get('time_slot') or '').strip()
     raw_guests = request.POST.get('guests') or request.POST.get('number_of_guests') or 6
-    message = request.POST.get('message', '')
+    message = (request.POST.get('message') or '').strip()
+
+    # 1. Name validation
+    if not full_name or len(full_name) < 2:
+        return JsonResponse({
+            'status': 'error',
+            'error': 'Please enter a valid full name (minimum 2 characters).'
+        }, status=400)
+
+    # 2. Phone validation
+    phone_digits = re.sub(r'\D', '', phone)
+    if len(phone_digits) < 10:
+        return JsonResponse({
+            'status': 'error',
+            'error': 'Please enter a valid 10-digit phone or WhatsApp number.'
+        }, status=400)
+
+    # 3. Email validation (if provided)
+    if email:
+        try:
+            validate_email(email)
+        except ValidationError:
+            return JsonResponse({
+                'status': 'error',
+                'error': 'Please enter a valid email address.'
+            }, status=400)
+
+    # 4. Date validation (must not be in the past)
+    parsed_date = None
+    if not raw_date:
+        return JsonResponse({
+            'status': 'error',
+            'error': 'Please select your preferred date.'
+        }, status=400)
+
+    try:
+        parsed_date = datetime.strptime(raw_date, '%Y-%m-%d').date()
+        today = timezone.now().date()
+        if parsed_date < today:
+            return JsonResponse({
+                'status': 'error',
+                'error': f'Booking date cannot be in the past ({parsed_date.strftime("%d-%m-%Y")}). Please choose today or a future date.'
+            }, status=400)
+    except ValueError:
+        return JsonResponse({
+            'status': 'error',
+            'error': 'Invalid date format. Please choose a valid date from the calendar.'
+        }, status=400)
+
+    # 5. Guests validation
+    try:
+        num_guests = int(raw_guests)
+        if num_guests < 1 or num_guests > 60:
+            return JsonResponse({
+                'status': 'error',
+                'error': 'Estimated number of guests must be between 1 and 60.'
+            }, status=400)
+    except (ValueError, TypeError):
+        num_guests = 6
 
     # Normalize stay_type (support visit/inspection appointment)
     if 'visit' in stay_type.lower() or 'inspect' in stay_type.lower() or 'appoint' in stay_type.lower():
@@ -234,19 +298,6 @@ def api_book(request):
         norm_stay = 'celebration'
     else:
         norm_stay = 'overnight'
-
-    try:
-        num_guests = int(raw_guests)
-    except (ValueError, TypeError):
-        num_guests = 6
-
-    parsed_date = None
-    if raw_date:
-        try:
-            from datetime import datetime
-            parsed_date = datetime.strptime(raw_date, '%Y-%m-%d').date()
-        except Exception:
-            pass
 
     notes_parts = []
     if time_slot:
@@ -268,27 +319,27 @@ def api_book(request):
     # Sync everywhere (SMTP Email + MongoDB Atlas)
     sync_inquiry_everywhere(inquiry)
 
-    # Format WhatsApp URL with configured phone
+    # Format WhatsApp URL with configured phone (clean, natural professional text)
     wa_phone = getattr(settings, 'WHATSAPP_PHONE', '917768956163')
     wa_lines = [
-        "Hi Grace Ville Concierge! 👋",
-        "I would like to book an appointment / stay at Grace Ville.",
-        "━━━━━━━━━━━━━━━━━━━━",
-        f"📋 Ref ID: {inquiry.reference_id}",
-        f"👤 Name: {full_name}",
-        f"📞 Phone: {phone}",
-        f"🏡 Category: {inquiry.get_stay_type_display()}",
+        "Hello Grace Ville Concierge,",
+        "I would like to inquire about booking Grace Ville.",
+        "----------------------------------------",
+        f"Booking Reference: {inquiry.reference_id}",
+        f"Name: {full_name}",
+        f"Phone: {phone}",
+        f"Stay Type: {inquiry.get_stay_type_display()}",
     ]
     if inquiry.check_in_date:
-        wa_lines.append(f"📅 Preferred Date: {inquiry.check_in_date}")
+        wa_lines.append(f"Preferred Date: {inquiry.check_in_date.strftime('%d-%m-%Y')}")
     if time_slot:
-        wa_lines.append(f"⏰ Preferred Slot: {time_slot}")
+        wa_lines.append(f"Preferred Slot: {time_slot}")
     if num_guests:
-        wa_lines.append(f"👥 Estimated Guests: {num_guests}")
+        wa_lines.append(f"Estimated Guests: {num_guests}")
     if message:
-        wa_lines.append(f"📝 Notes: {message}")
-    wa_lines.append("━━━━━━━━━━━━━━━━━━━━")
-    wa_lines.append("Please confirm availability and booking.")
+        wa_lines.append(f"Notes: {message}")
+    wa_lines.append("----------------------------------------")
+    wa_lines.append("Please confirm availability.")
     wa_text = "\n".join(wa_lines)
     wa_encoded = urllib.parse.quote(wa_text)
     wa_url = f"https://wa.me/{wa_phone}?text={wa_encoded}"
@@ -296,7 +347,7 @@ def api_book(request):
     return JsonResponse({
         'status': 'success',
         'reference_id': inquiry.reference_id,
-        'message': f"Appointment registered successfully! Reference: {inquiry.reference_id}.",
+        'message': f"Inquiry registered successfully. Reference: {inquiry.reference_id}.",
         'whatsapp_url': wa_url
     })
 

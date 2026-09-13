@@ -25,6 +25,27 @@ class BookingInquiryForm(forms.ModelForm):
             'message': forms.Textarea(attrs={'placeholder': 'Preferred dates, meal options, special requirements...', 'rows': 4, 'class': 'form-control'}),
         }
 
+    def clean_full_name(self):
+        name = self.cleaned_data.get('full_name', '').strip()
+        if len(name) < 2:
+            raise forms.ValidationError("Please enter your full name (minimum 2 characters).")
+        return name
+
+    def clean_phone(self):
+        import re
+        phone = self.cleaned_data.get('phone', '').strip()
+        digits = re.sub(r'\D', '', phone)
+        if len(digits) < 10:
+            raise forms.ValidationError("Please enter a valid phone number (at least 10 digits).")
+        return phone
+
+    def clean_check_in_date(self):
+        from django.utils import timezone
+        date = self.cleaned_data.get('check_in_date')
+        if date and date < timezone.now().date():
+            raise forms.ValidationError("Booking date cannot be in the past. Please choose today or a future date.")
+        return date
+
 
 class ContactMessageForm(forms.ModelForm):
     class Meta:
