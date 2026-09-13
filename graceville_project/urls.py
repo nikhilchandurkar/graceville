@@ -43,10 +43,13 @@ def sitemap_xml(request):
 </urlset>"""
     return HttpResponse(content, content_type="application/xml")
 
+from django.views.generic.base import RedirectView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('robots.txt', robots_txt, name='robots_txt'),
     path('sitemap.xml', sitemap_xml, name='sitemap_xml'),
+    path('favicon.ico', RedirectView.as_view(url='/static/assets/images/favicon.ico', permanent=True)),
     path('', include('villa.urls')),
 ]
 

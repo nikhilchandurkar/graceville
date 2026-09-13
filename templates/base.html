@@ -9,6 +9,13 @@
     <meta name="keywords" content="Grace Ville, Grace Ville Saswad, villa in Saswad, private villa near Pune, villa near Purandar Airport, pool villa Pune, luxury villa with swimming pool, weekend getaway Pune, day outing villa Saswad, villa rental Pune, private party villa Pune">
     <meta name="author" content="Grace Ville">
     <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#1e1e1e">
+
+    <!-- Favicon & Touch Icons -->
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/images/favicon.ico' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'assets/images/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'assets/images/favicon-16x16.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/images/apple-touch-icon.png' %}">
 
     <!-- Open Graph / Facebook / WhatsApp Preview -->
     <meta property="og:type" content="website">
@@ -73,49 +80,209 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
 
     <style>
-      /* Absolute logo wrapping fix */
-      .header-area .main-nav {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: space-between !important;
+      /* Global Mobile Guard */
+      html, body {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        position: relative;
       }
-      .header-area .main-nav .logo {
-        white-space: nowrap !important;
-        flex-shrink: 0 !important;
-        display: flex !important;
-        align-items: center !important;
-        margin-right: 15px !important;
-        text-decoration: none !important;
+
+      /* Desktop Layout (min-width: 992px) */
+      @media (min-width: 992px) {
+        .header-area .main-nav {
+          display: flex !important;
+          align-items: center !important;
+          justify-content: space-between !important;
+        }
+        .header-area .main-nav .logo {
+          white-space: nowrap !important;
+          flex-shrink: 0 !important;
+          display: flex !important;
+          align-items: center !important;
+          margin-right: 15px !important;
+          text-decoration: none !important;
+        }
+        .header-area .main-nav .logo h1 {
+          font-size: 24px !important;
+          letter-spacing: 1.5px !important;
+          white-space: nowrap !important;
+          display: inline-block !important;
+          margin: 0 !important;
+          line-height: 100px !important;
+          color: #1e1e1e !important;
+        }
+        .background-header .main-nav .logo h1 {
+          line-height: 80px !important;
+        }
+        .header-area .main-nav ul.nav {
+          flex-grow: 1 !important;
+          flex-shrink: 1 !important;
+          white-space: nowrap !important;
+          justify-content: flex-end !important;
+          margin-top: 0 !important;
+          display: flex !important;
+          align-items: center !important;
+        }
+        .header-area .main-nav .nav li {
+          padding-left: 6px !important;
+          padding-right: 6px !important;
+        }
+        .header-area .main-nav .nav li a {
+          padding-left: 12px !important;
+          padding-right: 12px !important;
+          font-size: 14px !important;
+        }
       }
-      .header-area .main-nav .logo h1 {
-        font-size: 24px !important;
-        letter-spacing: 1.5px !important;
-        white-space: nowrap !important;
-        display: inline-block !important;
-        margin: 0 !important;
-        line-height: 100px !important;
-        color: #1e1e1e !important;
-      }
-      .background-header .main-nav .logo h1 {
-        line-height: 80px !important;
-      }
-      .header-area .main-nav ul.nav {
-        flex-grow: 1 !important;
-        flex-shrink: 1 !important;
-        white-space: nowrap !important;
-        justify-content: flex-end !important;
-        margin-top: 0 !important;
-        display: flex !important;
-        align-items: center !important;
-      }
-      .header-area .main-nav .nav li {
-        padding-left: 6px !important;
-        padding-right: 6px !important;
-      }
-      .header-area .main-nav .nav li a {
-        padding-left: 12px !important;
-        padding-right: 12px !important;
-        font-size: 14px !important;
+
+      /* Mobile & Tablet Layout (max-width: 991px) */
+      @media (max-width: 991px) {
+        .header-area {
+          height: 75px !important;
+          padding: 0 15px !important;
+          position: fixed !important;
+          top: 0 !important;
+          left: 0 !important;
+          width: 100% !important;
+          background: #ffffff !important;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.08) !important;
+          z-index: 99999 !important;
+        }
+        .header-area .main-nav {
+          height: 75px !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: space-between !important;
+          position: relative !important;
+          overflow: visible !important;
+        }
+        .header-area .main-nav .logo {
+          display: flex !important;
+          align-items: center !important;
+          margin: 0 !important;
+          text-decoration: none !important;
+        }
+        .header-area .main-nav .logo h1 {
+          font-size: 20px !important;
+          line-height: 75px !important;
+          margin: 0 !important;
+          color: #1e1e1e !important;
+          white-space: nowrap !important;
+        }
+        .header-area .main-nav .menu-trigger {
+          display: block !important;
+          position: relative !important;
+          top: 0 !important;
+          right: 0 !important;
+          width: 36px !important;
+          height: 36px !important;
+          cursor: pointer !important;
+          z-index: 100000 !important;
+          margin: 0 !important;
+        }
+        .header-area .main-nav .menu-trigger span {
+          top: 17px !important;
+        }
+        /* Mobile Dropdown Navigation Drawer */
+        .header-area .main-nav .nav {
+          display: none;
+          position: absolute !important;
+          top: 75px !important;
+          left: -15px !important;
+          width: calc(100% + 30px) !important;
+          background: #ffffff !important;
+          box-shadow: 0 15px 30px rgba(0,0,0,0.12) !important;
+          border-top: 2px solid #f35525 !important;
+          border-radius: 0 0 16px 16px !important;
+          padding: 10px 0 15px 0 !important;
+          z-index: 99998 !important;
+          margin: 0 !important;
+          float: none !important;
+        }
+        .header-area .main-nav .nav li {
+          display: block !important;
+          width: 100% !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          background: transparent !important;
+          text-align: left !important;
+        }
+        .header-area .main-nav .nav li a {
+          display: block !important;
+          padding: 13px 25px !important;
+          font-size: 15px !important;
+          font-weight: 500 !important;
+          color: #2a2a2a !important;
+          border-bottom: 1px solid #f2f2f2 !important;
+          height: auto !important;
+          line-height: 24px !important;
+          transition: all 0.2s ease !important;
+        }
+        .header-area .main-nav .nav li a:hover,
+        .header-area .main-nav .nav li a.active {
+          color: #f35525 !important;
+          background: #fff8f6 !important;
+          padding-left: 30px !important;
+        }
+        .header-area .main-nav .nav li:last-child {
+          margin-top: 10px !important;
+          padding: 0 20px !important;
+        }
+        .header-area .main-nav .nav li:last-child a {
+          display: block !important;
+          background: #f35525 !important;
+          color: #ffffff !important;
+          border-radius: 25px !important;
+          text-align: center !important;
+          font-weight: 600 !important;
+          padding: 11px 20px !important;
+          border-bottom: none !important;
+        }
+
+        /* Banner adjustments for mobile */
+        .main-banner .item {
+          padding: 115px 15px 120px 15px !important;
+          min-height: 460px !important;
+        }
+        .main-banner .item h2 {
+          font-size: 26px !important;
+          line-height: 36px !important;
+          width: 100% !important;
+        }
+        .main-banner .item span.category {
+          font-size: 13px !important;
+          padding: 4px 14px !important;
+        }
+
+        /* Photo tour carousel on mobile */
+        #villaPhotoCarousel .carousel-item img {
+          height: 250px !important;
+          max-height: 250px !important;
+          object-fit: cover !important;
+        }
+        .video-content {
+          margin-top: -30px !important;
+        }
+
+        /* Fun facts on mobile */
+        .fun-facts .counter {
+          padding: 18px 10px !important;
+          margin-bottom: 15px !important;
+        }
+        .fun-facts .counter h2 {
+          font-size: 32px !important;
+        }
+        .fun-facts .counter p {
+          font-size: 12px !important;
+        }
+
+        /* Contact & Map adjustments */
+        .contact-content .item {
+          margin-bottom: 15px !important;
+        }
+        #map iframe {
+          height: 280px !important;
+        }
       }
 
       .badge-pill {
@@ -158,12 +325,13 @@
         z-index: 99999;
         max-width: 420px;
       }
+
       /* Floating WhatsApp Concierge Button */
       .whatsapp-float-btn {
         position: fixed;
         bottom: 25px;
         right: 25px;
-        z-index: 99999;
+        z-index: 99995;
         background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
         color: #fff !important;
         display: flex;
@@ -185,18 +353,64 @@
         box-shadow: 0 8px 24px rgba(37, 211, 102, 0.6);
         color: #fff !important;
       }
-      @media (max-width: 576px) {
-        .whatsapp-float-label {
-          display: none;
+
+      /* Mobile Bottom Action Bar (<= 767px) */
+      .mobile-bottom-bar {
+        display: none;
+      }
+      @media (max-width: 767px) {
+        body {
+          padding-bottom: 65px !important;
         }
         .whatsapp-float-btn {
-          padding: 14px;
-          border-radius: 50%;
-          bottom: 20px;
-          right: 20px;
+          bottom: 75px !important;
+          right: 15px !important;
+          padding: 12px !important;
+          border-radius: 50% !important;
         }
-        .whatsapp-float-btn i {
-          font-size: 24px;
+        .whatsapp-float-label {
+          display: none !important;
+        }
+        .mobile-bottom-bar {
+          display: flex !important;
+          position: fixed !important;
+          bottom: 0 !important;
+          left: 0 !important;
+          width: 100% !important;
+          height: 60px !important;
+          background: #ffffff !important;
+          box-shadow: 0 -3px 15px rgba(0, 0, 0, 0.1) !important;
+          z-index: 99997 !important;
+          align-items: center !important;
+          justify-content: space-around !important;
+          padding: 0 5px !important;
+          border-top: 1px solid #ebebeb !important;
+        }
+        .mobile-bar-action {
+          display: flex !important;
+          flex-direction: column !important;
+          align-items: center !important;
+          justify-content: center !important;
+          color: #4a4a4a !important;
+          text-decoration: none !important;
+          font-size: 11px !important;
+          font-weight: 600 !important;
+          flex: 1 !important;
+          height: 100% !important;
+          transition: all 0.2s !important;
+        }
+        .mobile-bar-action i {
+          font-size: 18px !important;
+          margin-bottom: 3px !important;
+        }
+        .mobile-bar-action:hover, .mobile-bar-action:active {
+          color: #f35525 !important;
+        }
+        .mobile-bar-action.wa-action i {
+          color: #25d366 !important;
+        }
+        .mobile-bar-action.book-action {
+          color: #f35525 !important;
         }
       }
     </style>
@@ -514,6 +728,15 @@
         submitBtn.disabled = false;
       });
     }
+    // Auto-close mobile dropdown when any menu link is clicked
+    $(document).ready(function() {
+      $('.header-area .main-nav .nav li a').on('click', function() {
+        if ($(window).width() <= 991) {
+          $('.menu-trigger').removeClass('active');
+          $('.header-area .main-nav .nav').slideUp(200);
+        }
+      });
+    });
   </script>
 
   <!-- Floating WhatsApp Concierge Widget -->
@@ -521,6 +744,22 @@
     <i class="fab fa-whatsapp"></i>
     <span class="whatsapp-float-label">Book on WhatsApp</span>
   </a>
+
+  <!-- Mobile Bottom Sticky Action Bar (Visible only on screens <= 767px) -->
+  <div class="mobile-bottom-bar d-flex d-md-none">
+    <a href="tel:+917768956163" class="mobile-bar-action">
+      <i class="fa fa-phone"></i>
+      <span>Call</span>
+    </a>
+    <a href="{{ WHATSAPP_CHAT_URL }}" target="_blank" rel="noopener noreferrer" class="mobile-bar-action wa-action">
+      <i class="fab fa-whatsapp"></i>
+      <span>WhatsApp</span>
+    </a>
+    <a href="#appointmentModal" data-bs-toggle="modal" data-bs-target="#appointmentModal" class="mobile-bar-action book-action">
+      <i class="fa fa-calendar-check"></i>
+      <span>Book Visit</span>
+    </a>
+  </div>
 
   </body>
 </html>
