@@ -117,7 +117,8 @@
               <div class="col-lg-12">
                 <fieldset>
                   <label for="date">Preferred Date</label>
-                  <input type="date" name="date" id="date" required class="form-control mb-3" style="height: 44px; border-radius: 22px; border: 1px solid #eee; padding: 0 20px;">
+                  <input type="date" name="date" id="date" required class="form-control mb-1" style="height: 44px; border-radius: 22px; border: 1px solid #eee; padding: 0 20px;">
+                  <div id="contact_date_helper" class="form-text text-muted mb-3" style="font-size: 11.5px; padding-left: 8px;">Check-in 12:00 PM &bull; Check-out 11:00 AM (Next Day)</div>
                 </fieldset>
               </div>
               <div class="col-lg-12">
@@ -155,6 +156,22 @@
 
 {% block extra_scripts %}
 <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const contactDate = document.getElementById('date');
+    const contactStay = document.getElementById('stay_type');
+    const contactHelper = document.getElementById('contact_date_helper');
+    if (contactDate && contactHelper && typeof updateDateHelper === 'function') {
+      contactDate.addEventListener('change', function() {
+        updateDateHelper(contactDate, contactHelper, contactStay);
+      });
+      if (contactStay) {
+        contactStay.addEventListener('change', function() {
+          updateDateHelper(contactDate, contactHelper, contactStay);
+        });
+      }
+    }
+  });
+
   function submitDjangoBooking(e) {
     e.preventDefault();
     const name = document.getElementById('name').value.trim();
@@ -232,11 +249,19 @@
       feedback.className = 'alert alert-success form-alert text-center mt-3';
       feedback.innerHTML = `
         <div style="font-size: 16px; margin-bottom: 8px;"><strong>Inquiry Received Successfully</strong></div>
-        <div>Booking Reference: <span style="background: #fff; color: #f35525; padding: 2px 8px; border-radius: 4px; font-weight: bold;">${body.reference_id}</span></div>
-        <p class="mt-2 mb-3" style="font-size: 14px;">Thank you <strong>${name}</strong>. An email notification has been dispatched. Click below to continue directly on WhatsApp:</p>
-        <a href="${body.whatsapp_url}" target="_blank" class="whatsapp-btn justify-content-center" style="display: inline-flex; width: auto; padding: 8px 18px; font-size: 14px;">
-          <i class="fab fa-whatsapp"></i> Confirm on WhatsApp
-        </a>
+        <div class="mb-2">Booking Reference: <span style="background: #fff; color: #f35525; padding: 2px 8px; border-radius: 4px; font-weight: bold; font-size: 15px;">${body.reference_id}</span></div>
+        <p class="mt-2 mb-3" style="font-size: 13px;">Thank you <strong>${name}</strong>. Confirmation email &amp; calendar invite sent! Add to calendar or chat on WhatsApp:</p>
+        <div class="d-grid gap-2 mb-2">
+          <a href="${body.google_calendar_url}" target="_blank" class="btn text-white fw-bold" style="background: #f35525; border-radius: 25px; font-size: 13.5px; padding: 9px;">
+            <i class="fa fa-calendar-plus me-1"></i> Add to Google Calendar
+          </a>
+          <a href="${body.calendar_ics_url}" target="_blank" class="btn btn-dark fw-bold" style="border-radius: 25px; font-size: 13.5px; padding: 9px;">
+            <i class="fa fa-calendar-check me-1"></i> Add to Apple / Phone Calendar (.ics)
+          </a>
+          <a href="${body.whatsapp_url}" target="_blank" class="whatsapp-btn justify-content-center" style="display: inline-flex; width: 100%; padding: 9px 18px; font-size: 14px; border-radius: 25px;">
+            <i class="fab fa-whatsapp"></i> Confirm on WhatsApp
+          </a>
+        </div>
       `;
       submitBtn.innerText = 'Inquiry Registered';
 

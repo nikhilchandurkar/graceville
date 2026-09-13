@@ -214,19 +214,21 @@ def contact(request):
 def api_book(request):
     """
     AJAX endpoint for instant booking inquiry submission.
-    Saves to database, dispatches SMTP email, syncs to MongoDB Atlas, and returns WhatsApp link.
+    Saves to database, dispatches SMTP email, syncs to MongoDB Atlas, and returns WhatsApp and Calendar links.
     """
     import re
-    from datetime import datetime
+    from datetime import datetime, timedelta
     from django.utils import timezone
     from django.core.validators import validate_email
     from django.core.exceptions import ValidationError
+    from .emails import get_google_calendar_url, get_outlook_calendar_url, get_device_calendar_url
 
     full_name = (request.POST.get('name') or request.POST.get('full_name') or '').strip()
     email = (request.POST.get('email') or '').strip()
     phone = (request.POST.get('phone') or '').strip()
     stay_type = request.POST.get('stay_type', 'overnight')
     raw_date = (request.POST.get('date') or request.POST.get('visit_date') or request.POST.get('check_in_date') or '').strip()
+    raw_checkout = (request.POST.get('check_out_date') or request.POST.get('checkout_date') or '').strip()
     time_slot = (request.POST.get('time_slot') or '').strip()
     raw_guests = request.POST.get('guests') or request.POST.get('number_of_guests') or 6
     message = (request.POST.get('message') or '').strip()
@@ -256,7 +258,7 @@ def api_book(request):
                 'error': 'Please enter a valid email address.'
             }, status=400)
 
-    # 4. Date validation (must not be in the past)
+    # 4. Date validation (must not be in the past, supports multiple formats)
     parsed_date = None
     if not raw_date:
         return JsonResponse({
@@ -264,19 +266,53 @@ def api_book(request):
             'error': 'Please select your preferred date.'
         }, status=400)
 
-    try:
-        parsed_date = datetime.strptime(raw_date, '%Y-%m-%d').date()
-        today = timezone.now().date()
-        if parsed_date < today:
-            return JsonResponse({
-                'status': 'error',
-                'error': f'Booking date cannot be in the past ({parsed_date.strftime("%d-%m-%Y")}). Please choose today or a future date.'
-            }, status=400)
-    except ValueError:
+    for fmt in ('%Y-%m-%d', '%d-%m-%Y', '%d/%m/%Y', '%Y/%m/%d'):
+        try:
+            parsed_date = datetime.strptime(raw_date, fmt).date()
+            break
+        except ValueError:
+            pass
+
+    if not parsed_date:
         return JsonResponse({
             'status': 'error',
             'error': 'Invalid date format. Please choose a valid date from the calendar.'
         }, status=400)
+
+    today = timezone.now().date()
+    if parsed_date < today:
+        return JsonResponse({
+            'status': 'error',
+            'error': f'Booking date cannot be in the past ({parsed_date.strftime("%d-%m-%Y")}). Please choose today or a future date.'
+        }, status=400)
+
+    # Normalize stay_type (support visit/inspection appointment)
+    if 'visit' in stay_type.lower() or 'inspect' in stay_type.lower() or 'appoint' in stay_type.lower():
+        norm_stay = 'visit'
+    elif 'day' in stay_type.lower():
+        norm_stay = 'day_outing'
+    elif 'celebrat' in stay_type.lower() or 'event' in stay_type.lower():
+        norm_stay = 'celebration'
+    else:
+        norm_stay = 'overnight'
+
+    # Compute check_out_date
+    parsed_checkout = None
+    if raw_checkout:
+        for fmt in ('%Y-%m-%d', '%d-%m-%Y', '%d/%m/%Y', '%Y/%m/%d'):
+            try:
+                parsed_checkout = datetime.strptime(raw_checkout, fmt).date()
+                break
+            except ValueError:
+                pass
+
+    if not parsed_checkout:
+        if norm_stay in ['day_outing', 'visit']:
+            parsed_checkout = parsed_date
+        else:
+            parsed_checkout = parsed_date + timedelta(days=1)
+    elif parsed_checkout < parsed_date:
+        parsed_checkout = parsed_date + timedelta(days=1)
 
     # 5. Guests validation
     try:
@@ -288,16 +324,6 @@ def api_book(request):
             }, status=400)
     except (ValueError, TypeError):
         num_guests = 6
-
-    # Normalize stay_type (support visit/inspection appointment)
-    if 'visit' in stay_type.lower() or 'inspect' in stay_type.lower() or 'appoint' in stay_type.lower():
-        norm_stay = 'visit'
-    elif 'day' in stay_type.lower():
-        norm_stay = 'day_outing'
-    elif 'celebrat' in stay_type.lower() or 'event' in stay_type.lower():
-        norm_stay = 'celebration'
-    else:
-        norm_stay = 'overnight'
 
     notes_parts = []
     if time_slot:
@@ -312,6 +338,7 @@ def api_book(request):
         phone=phone,
         stay_type=norm_stay,
         check_in_date=parsed_date,
+        check_out_date=parsed_checkout,
         number_of_guests=num_guests,
         message=combined_notes
     )
@@ -331,7 +358,9 @@ def api_book(request):
         f"Stay Type: {inquiry.get_stay_type_display()}",
     ]
     if inquiry.check_in_date:
-        wa_lines.append(f"Preferred Date: {inquiry.check_in_date.strftime('%d-%m-%Y')}")
+        wa_lines.append(f"Check-in Date: {inquiry.check_in_date.strftime('%d-%m-%Y')}")
+    if inquiry.check_out_date:
+        wa_lines.append(f"Check-out Date: {inquiry.check_out_date.strftime('%d-%m-%Y')}")
     if time_slot:
         wa_lines.append(f"Preferred Slot: {time_slot}")
     if num_guests:
@@ -344,12 +373,39 @@ def api_book(request):
     wa_encoded = urllib.parse.quote(wa_text)
     wa_url = f"https://wa.me/{wa_phone}?text={wa_encoded}"
 
+    # Multi-calendar URLs
+    gcal_url = get_google_calendar_url(inquiry)
+    outlook_url = get_outlook_calendar_url(inquiry)
+    ics_download_url = f"/booking/{inquiry.reference_id}/calendar.ics"
+
     return JsonResponse({
         'status': 'success',
         'reference_id': inquiry.reference_id,
         'message': f"Inquiry registered successfully. Reference: {inquiry.reference_id}.",
-        'whatsapp_url': wa_url
+        'whatsapp_url': wa_url,
+        'google_calendar_url': gcal_url,
+        'outlook_calendar_url': outlook_url,
+        'calendar_ics_url': ics_download_url,
     })
+
+
+def download_calendar_ics(request, ref_id):
+    """
+    Public free API endpoint for direct device calendar sync.
+    Returns RFC 5545 .ics calendar invite for 1-tap addition on iOS, Android, macOS, and Windows.
+    """
+    from django.http import HttpResponse, Http404
+    from .emails import generate_ics_invite
+    try:
+        inquiry = BookingInquiry.objects.get(reference_id=ref_id)
+    except BookingInquiry.DoesNotExist:
+        raise Http404("Booking inquiry reference not found.")
+
+    ics_content = generate_ics_invite(inquiry)
+    response = HttpResponse(ics_content, content_type='text/calendar; charset=utf-8')
+    response['Content-Disposition'] = f'attachment; filename="graceville-{inquiry.reference_id}.ics"'
+    return response
+
 
 def custom_404_view(request, exception=None):
     return render(request, '404.html', status=404)

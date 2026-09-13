@@ -169,22 +169,9 @@
           flex-shrink: 0 !important;
           display: flex !important;
           align-items: center !important;
-          margin-right: 15px !important;
           margin-right: 20px !important;
           text-decoration: none !important;
           height: 100% !important;
-        }
-        .header-area .main-nav .logo h1 {
-          font-size: 24px !important;
-          letter-spacing: 1.5px !important;
-          white-space: nowrap !important;
-          display: inline-block !important;
-          margin: 0 !important;
-          line-height: 100px !important;
-          color: #1e1e1e !important;
-        }
-        .background-header .main-nav .logo h1 {
-          line-height: 80px !important;
         }
         .header-area .main-nav ul.nav {
           flex-grow: 1 !important;
@@ -204,8 +191,6 @@
           height: 100% !important;
         }
         .header-area .main-nav .nav li a {
-          padding-left: 12px !important;
-          padding-right: 12px !important;
           padding-left: 14px !important;
           padding-right: 14px !important;
           font-size: 14px !important;
@@ -261,7 +246,6 @@
           display: none !important;
         }
         .header-area {
-          height: 75px !important;
           height: 72px !important;
           padding: 0 15px !important;
           position: fixed !important;
@@ -273,7 +257,6 @@
           z-index: 99999 !important;
         }
         .header-area .main-nav {
-          height: 75px !important;
           height: 72px !important;
           display: flex !important;
           align-items: center !important;
@@ -287,12 +270,6 @@
           margin: 0 !important;
           text-decoration: none !important;
         }
-        .header-area .main-nav .logo h1 {
-          font-size: 20px !important;
-          line-height: 75px !important;
-          margin: 0 !important;
-          color: #1e1e1e !important;
-          white-space: nowrap !important;
         .logo-mark {
           width: 38px !important;
           height: 38px !important;
@@ -326,7 +303,6 @@
         .header-area .main-nav .nav {
           display: none;
           position: absolute !important;
-          top: 75px !important;
           top: 72px !important;
           left: -15px !important;
           width: calc(100% + 30px) !important;
@@ -624,19 +600,15 @@
 
   <div class="sub-header">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-9 col-md-9">
       <div class="row align-items-center">
         <div class="col-lg-8 col-md-8">
           <ul class="info">
             <li><span style="color: #4a4a4a; font-weight: 500;"><i class="fa fa-phone" style="color: #f35525;"></i> {{ WHATSAPP_PHONE_FORMATTED }}</span></li>
             <li><span style="color: #4a4a4a; font-weight: 500;"><i class="fa fa-user" style="color: #f35525;"></i> {{ OWNER_PHONE_FORMATTED }} (Owner)</span></li>
             <li><a href="mailto:graceville1911@gmail.com" style="color: inherit;" title="Send an Email"><i class="fa fa-envelope" style="color: #f35525;"></i> graceville1911@gmail.com</a></li>
-            <li><a href="https://maps.app.goo.gl/XPxZYJUyNyA1UPX79" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline;" title="Open in Google Maps"><i class="fa fa-map-marker-alt" style="color: #f35525;"></i> Udachiwadi, Saswad (33 km from Pune)</a></li>
             <li><a href="https://maps.app.goo.gl/XPxZYJUyNyA1UPX79" target="_blank" rel="noopener noreferrer" style="color: inherit;" title="Open in Google Maps"><i class="fa fa-map-marker-alt" style="color: #f35525;"></i> Saswad (33 km from Pune)</a></li>
           </ul>
         </div>
-        <div class="col-lg-3 col-md-3">
         <div class="col-lg-4 col-md-4">
           <ul class="social-links">
             <li><a href="https://maps.app.goo.gl/XPxZYJUyNyA1UPX79" target="_blank" rel="noopener noreferrer" title="View on Google Maps"><i class="fa fa-map"></i></a></li>
@@ -658,8 +630,6 @@
             <div class="col-12">
                 <nav class="main-nav">
                     <!-- ***** Logo Start ***** -->
-                    <a href="{% url 'index' %}" class="logo">
-                        <h1>Grace Ville</h1>
                     <a href="{% url 'index' %}" class="logo header-logo">
                         <span class="logo-mark">GV</span>
                         <div class="logo-text-group">
@@ -674,7 +644,6 @@
                       <li><a href="{% url 'properties' %}" class="{% if active_page == 'properties' %}active{% endif %}">Gallery &amp; Spaces</a></li>
                       <li><a href="{% url 'property_details' %}" class="{% if active_page == 'property_details' %}active{% endif %}">Villa Details</a></li>
                       <li><a href="{% url 'contact' %}" class="{% if active_page == 'contact' %}active{% endif %}">Contact &amp; Location</a></li>
-                      <li><a href="#appointmentModal" data-bs-toggle="modal" data-bs-target="#appointmentModal"><i class="fa fa-calendar"></i> Schedule a Visit</a></li>
                       <li><a href="#appointmentModal" data-bs-toggle="modal" data-bs-target="#appointmentModal"><i class="fa fa-calendar-check"></i> Schedule a Visit</a></li>
                   </ul>   
                     <a class='menu-trigger'>
@@ -765,6 +734,7 @@
               <div class="col-md-4">
                 <label class="form-label fw-bold" style="font-size: 13px;">Preferred Date *</label>
                 <input type="date" id="modal_date" class="form-control" required style="border-radius: 8px; padding: 10px 14px;">
+                <div id="modal_date_helper" class="form-text text-muted" style="font-size: 11px; margin-top: 4px;">Check-in 12:00 PM &bull; Check-out 11:00 AM</div>
               </div>
               <div class="col-md-4">
                 <label class="form-label fw-bold" style="font-size: 13px;">Preferred Slot / Timing</label>
@@ -800,7 +770,37 @@
   </div>
 
   <script>
-    // Universal Date Picker Min-Date Setter (Blocks past dates across all inputs)
+    // Universal Date Picker Min-Date Setter & Live Helper
+    function updateDateHelper(dateInput, helperEl, stayTypeSelect) {
+      if (!dateInput || !helperEl) return;
+      const dateVal = dateInput.value;
+      const stayType = stayTypeSelect ? stayTypeSelect.value : 'overnight';
+      if (!dateVal) {
+        if (stayType === 'day_outing') {
+          helperEl.innerHTML = 'Timing: 10:00 AM &ndash; 6:00 PM (Day Pass)';
+        } else if (stayType === 'visit') {
+          helperEl.innerHTML = 'Pre-Visit Timing: 11:00 AM &ndash; 12:30 PM (Site Tour)';
+        } else {
+          helperEl.innerHTML = 'Check-in: 12:00 PM &bull; Check-out: 11:00 AM (Next Day)';
+        }
+        return;
+      }
+      const d = new Date(dateVal + 'T00:00:00');
+      const dNext = new Date(d);
+      dNext.setDate(dNext.getDate() + 1);
+      const opts = { weekday: 'short', month: 'short', day: 'numeric' };
+      const dStr = d.toLocaleDateString('en-IN', opts);
+      const dNextStr = dNext.toLocaleDateString('en-IN', opts);
+
+      if (stayType === 'day_outing') {
+        helperEl.innerHTML = `<strong>${dStr}</strong> (10:00 AM &ndash; 6:00 PM Day Pass)`;
+      } else if (stayType === 'visit') {
+        helperEl.innerHTML = `<strong>${dStr}</strong> (11:00 AM &ndash; 12:30 PM Pre-Visit)`;
+      } else {
+        helperEl.innerHTML = `In: <strong>${dStr}</strong> (12 PM) &bull; Out: <strong>${dNextStr}</strong> (11 AM)`;
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
       const today = new Date().toISOString().split('T')[0];
       document.querySelectorAll('input[type="date"]').forEach(function(dateInput) {
@@ -813,8 +813,23 @@
             this.setCustomValidity('');
             this.classList.remove('is-invalid');
           }
+          // Update corresponding helper
+          const modalHelper = document.getElementById('modal_date_helper');
+          const modalStay = document.getElementById('modal_stay_type');
+          if (this.id === 'modal_date') {
+            updateDateHelper(this, modalHelper, modalStay);
+          }
         });
       });
+
+      const modalStay = document.getElementById('modal_stay_type');
+      const modalDate = document.getElementById('modal_date');
+      const modalHelper = document.getElementById('modal_date_helper');
+      if (modalStay && modalDate && modalHelper) {
+        modalStay.addEventListener('change', function() {
+          updateDateHelper(modalDate, modalHelper, modalStay);
+        });
+      }
     });
 
     function submitModalAppointment(e) {
@@ -897,11 +912,19 @@
         feedback.className = 'alert alert-success text-center mt-3';
         feedback.innerHTML = `
           <div style="font-size: 17px; margin-bottom: 6px;"><strong>Appointment Confirmed</strong></div>
-          <div>Booking Reference: <span style="background: #fff; color: #f35525; padding: 3px 10px; border-radius: 6px; font-weight: bold;">${body.reference_id}</span></div>
-          <p class="mt-2 mb-3" style="font-size: 13px;">Thank you <strong>${name}</strong>. Your inquiry has been dispatched to our reservations team. Click below to continue directly on WhatsApp:</p>
-          <a href="${body.whatsapp_url}" target="_blank" class="whatsapp-btn justify-content-center" style="display: inline-flex; width: auto; padding: 10px 22px; font-size: 14px;">
-            <i class="fab fa-whatsapp"></i> Chat on WhatsApp with Reference
-          </a>
+          <div class="mb-2">Booking Reference: <span style="background: #fff; color: #f35525; padding: 3px 10px; border-radius: 6px; font-weight: bold; font-size: 15px;">${body.reference_id}</span></div>
+          <p class="mt-2 mb-3" style="font-size: 13px;">Thank you <strong>${name}</strong>. Your inquiry has been registered. Add your stay to your calendar &amp; connect with our concierge:</p>
+          <div class="d-grid gap-2 mb-2">
+            <a href="${body.google_calendar_url}" target="_blank" class="btn text-white fw-bold" style="background: #f35525; border-radius: 25px; font-size: 13.5px; padding: 10px;">
+              <i class="fa fa-calendar-plus me-1"></i> Add to Google Calendar
+            </a>
+            <a href="${body.calendar_ics_url}" target="_blank" class="btn btn-dark fw-bold" style="border-radius: 25px; font-size: 13.5px; padding: 10px;">
+              <i class="fa fa-calendar-check me-1"></i> Add to Apple / Phone Calendar (.ics)
+            </a>
+            <a href="${body.whatsapp_url}" target="_blank" class="whatsapp-btn justify-content-center" style="display: inline-flex; width: 100%; padding: 10px 22px; font-size: 14px; border-radius: 25px;">
+              <i class="fab fa-whatsapp"></i> Chat on WhatsApp with Reference
+            </a>
+          </div>
         `;
         submitBtn.innerHTML = '<i class="fa fa-check"></i> Registered Successfully';
         const waBtn = document.getElementById('modal-wa-btn');

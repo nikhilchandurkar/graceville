@@ -1,9 +1,8 @@
 import os
 import logging
-from django.core.mail import send_mail
 import urllib.parse
 from datetime import datetime, time, timedelta
-from django.core.mail import EmailMultiAlternatives, send_mail
+from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 
 logger = logging.getLogger(__name__)
@@ -17,7 +16,6 @@ def get_receiver_emails():
     if not raw_receivers:
         return ['graceville1911@gmail.com']
     
-    # Split by comma or semicolon and strip whitespace
     emails = [e.strip() for e in raw_receivers.replace(';', ',').split(',') if e.strip()]
     return emails if emails else ['graceville1911@gmail.com']
 
@@ -63,14 +61,10 @@ def calculate_booking_datetimes(inquiry):
     return ist_start, ist_end, utc_start, utc_end
 
 
-def get_google_calendar_url(inquiry):
+def get_calendar_details(inquiry):
     """
-    Generates a one-click Add to Google Calendar direct Web URL.
+    Shared title, details and location string for calendar APIs.
     """
-    ist_start, ist_end, utc_start, utc_end = calculate_booking_datetimes(inquiry)
-    start_str = utc_start.strftime('%Y%m%dT%H%M%SZ')
-    end_str = utc_end.strftime('%Y%m%dT%H%M%SZ')
-
     title = f"Grace Ville Stay - {inquiry.get_stay_type_display()} (Ref: {inquiry.reference_id})"
     details = (
         f"Grace Ville Luxury Private Villa\n"
@@ -80,10 +74,22 @@ def get_google_calendar_url(inquiry):
         f"Stay Package: {inquiry.get_stay_type_display()}\n"
         f"Phone / WhatsApp: {inquiry.phone}\n\n"
         f"Location: Udachiwadi, Saswad, Pune (33 km from Pune near Purandar Airport)\n"
-        f"Directions: https://maps.app.goo.gl/XPxZYJUyNyA1UPX79\n"
+        f"Google Maps Directions: https://maps.app.goo.gl/XPxZYJUyNyA1UPX79\n"
         f"Host Concierge: +91 77689 56163 / graceville1911@gmail.com"
     )
     location = "Grace Ville, Udachiwadi, Saswad, Pune, Maharashtra 412301"
+    return title, details, location
+
+
+def get_google_calendar_url(inquiry):
+    """
+    Generates a free one-click Add to Google Calendar direct Web URL.
+    Includes guest email pre-invitation if provided.
+    """
+    ist_start, ist_end, utc_start, utc_end = calculate_booking_datetimes(inquiry)
+    start_str = utc_start.strftime('%Y%m%dT%H%M%SZ')
+    end_str = utc_end.strftime('%Y%m%dT%H%M%SZ')
+    title, details, location = get_calendar_details(inquiry)
 
     params = {
         'action': 'TEMPLATE',
@@ -92,7 +98,62 @@ def get_google_calendar_url(inquiry):
         'details': details,
         'location': location,
     }
+    if inquiry.email and '@' in inquiry.email:
+        params['add'] = inquiry.email
+
     return f"https://calendar.google.com/calendar/render?{urllib.parse.urlencode(params)}"
+
+
+def get_outlook_calendar_url(inquiry):
+    """
+    Generates a free one-click Add to Microsoft Outlook / Office 365 Calendar Web URL.
+    """
+    ist_start, ist_end, utc_start, utc_end = calculate_booking_datetimes(inquiry)
+    start_iso = utc_start.strftime('%Y-%m-%dT%H:%M:%SZ')
+    end_iso = utc_end.strftime('%Y-%m-%dT%H:%M:%SZ')
+    title, details, location = get_calendar_details(inquiry)
+
+    params = {
+        'path': '/calendar/action/compose',
+        'rru': 'addevent',
+        'subject': title,
+        'startdt': start_iso,
+        'enddt': end_iso,
+        'body': details,
+        'location': location,
+    }
+    return f"https://outlook.live.com/calendar/0/deeplink/compose?{urllib.parse.urlencode(params)}"
+
+
+def get_yahoo_calendar_url(inquiry):
+    """
+    Generates a free one-click Add to Yahoo Calendar Web URL.
+    """
+    ist_start, ist_end, utc_start, utc_end = calculate_booking_datetimes(inquiry)
+    start_str = utc_start.strftime('%Y%m%dT%H%M%SZ')
+    end_str = utc_end.strftime('%Y%m%dT%H%M%SZ')
+    title, details, location = get_calendar_details(inquiry)
+
+    params = {
+        'v': '60',
+        'view': 'd',
+        'type': '20',
+        'title': title,
+        'st': start_str,
+        'et': end_str,
+        'desc': details,
+        'in_loc': location,
+    }
+    return f"https://calendar.yahoo.com/?{urllib.parse.urlencode(params)}"
+
+
+def get_device_calendar_url(inquiry):
+    """
+    Direct endpoint URL on Grace Ville domain that serves the .ics file.
+    Tapping this URL on iPhone Safari or Android immediately opens the native Calendar app.
+    """
+    site_url = os.environ.get('SITE_URL', 'https://graceville.vercel.app').rstrip('/')
+    return f"{site_url}/booking/{inquiry.reference_id}/calendar.ics"
 
 
 def generate_ics_invite(inquiry):
@@ -119,7 +180,7 @@ def generate_ics_invite(inquiry):
 
     ics_body = f"""BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//Grace Ville Luxury Villa//Booking Inquiry//EN
+PRODID:-//Grace Ville Luxury Villa//Booking Confirmation//EN
 CALSCALE:GREGORIAN
 METHOD:REQUEST
 BEGIN:VEVENT
@@ -131,6 +192,7 @@ SUMMARY:{summary}
 DESCRIPTION:{desc}
 LOCATION:{location}
 STATUS:CONFIRMED
+SEQUENCE:0
 ORGANIZER;CN="Grace Ville Reservations":mailto:graceville1911@gmail.com
 ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;CN="{inquiry.full_name}":mailto:{guest_email}
 BEGIN:VALARM
@@ -144,9 +206,10 @@ END:VCALENDAR""".replace("\r\n", "\n").replace("\n", "\r\n")
     return ics_body
 
 
-def render_guest_email_html(inquiry, gcal_url):
+def render_guest_email_html(inquiry, gcal_url, outlook_url, yahoo_url, device_cal_url):
     """
     Renders clean, luxury responsive HTML email for the guest confirmation.
+    Includes multi-calendar quick actions (Google, Apple/Device, Outlook, Yahoo).
     """
     check_in_display = inquiry.check_in_date.strftime('%A, %d %B %Y') if inquiry.check_in_date else 'Flexible / To be confirmed'
     check_out_display = inquiry.check_out_date.strftime('%A, %d %B %Y') if inquiry.check_out_date else (
@@ -230,12 +293,13 @@ def render_guest_email_html(inquiry, gcal_url):
             </td>
           </tr>
 
-          <!-- Calendar Notification & Quick Action Buttons -->
+          <!-- Free Calendar Notification & Quick Action Buttons -->
           <tr>
             <td style="padding: 10px 30px 25px 30px; text-align: center;">
-              <p style="color: #374151; font-size: 14px; font-weight: 600; margin: 0 0 15px 0;">Add to Calendar &amp; Connect with Villa Concierge:</p>
+              <p style="color: #374151; font-size: 14px; font-weight: 700; margin: 0 0 15px 0;">Add to Your Calendar (Free 1-Tap Sync):</p>
               
               <table border="0" cellpadding="0" cellspacing="0" style="margin: 0 auto; width: 100%;">
+                <!-- Google Calendar Button -->
                 <tr>
                   <td align="center" style="padding-bottom: 10px;">
                     <a href="{gcal_url}" target="_blank" style="display: block; width: 85%; max-width: 320px; background-color: #f35525; color: #ffffff; text-decoration: none; padding: 13px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; text-align: center; box-shadow: 0 2px 8px rgba(243, 85, 37, 0.3);">
@@ -243,6 +307,15 @@ def render_guest_email_html(inquiry, gcal_url):
                     </a>
                   </td>
                 </tr>
+                <!-- Apple / iPhone / Native Device Calendar Button -->
+                <tr>
+                  <td align="center" style="padding-bottom: 10px;">
+                    <a href="{device_cal_url}" target="_blank" style="display: block; width: 85%; max-width: 320px; background-color: #374151; color: #ffffff; text-decoration: none; padding: 13px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; text-align: center;">
+                      Add to Apple / Device Calendar (.ics)
+                    </a>
+                  </td>
+                </tr>
+                <!-- WhatsApp Concierge Button -->
                 <tr>
                   <td align="center" style="padding-bottom: 10px;">
                     <a href="{wa_url}" target="_blank" style="display: block; width: 85%; max-width: 320px; background-color: #25d366; color: #ffffff; text-decoration: none; padding: 13px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; text-align: center; box-shadow: 0 2px 8px rgba(37, 211, 102, 0.3);">
@@ -250,6 +323,7 @@ def render_guest_email_html(inquiry, gcal_url):
                     </a>
                   </td>
                 </tr>
+                <!-- Directions on Google Maps -->
                 <tr>
                   <td align="center">
                     <a href="{maps_url}" target="_blank" style="display: block; width: 85%; max-width: 320px; background-color: #1e1e1e; color: #ffffff; text-decoration: none; padding: 13px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; text-align: center;">
@@ -258,8 +332,15 @@ def render_guest_email_html(inquiry, gcal_url):
                   </td>
                 </tr>
               </table>
-              <p style="color: #9ca3af; font-size: 12px; margin: 14px 0 0 0;">
-                An automated <strong>invite.ics</strong> calendar file is also attached to this email for Apple Calendar and Outlook users.
+
+              <!-- Other Calendars (Outlook & Yahoo) -->
+              <p style="color: #6b7280; font-size: 12px; margin: 15px 0 0 0;">
+                Other Calendars: &nbsp;
+                <a href="{outlook_url}" target="_blank" style="color: #0078d4; text-decoration: underline; font-weight: 600;">Add to Outlook</a> &nbsp;|&nbsp;
+                <a href="{yahoo_url}" target="_blank" style="color: #6001d2; text-decoration: underline; font-weight: 600;">Add to Yahoo</a>
+              </p>
+              <p style="color: #9ca3af; font-size: 11px; margin: 8px 0 0 0;">
+                An automated <strong>invite.ics</strong> calendar file is also attached to this email.
               </p>
             </td>
           </tr>
@@ -304,7 +385,7 @@ def render_guest_email_html(inquiry, gcal_url):
     return html
 
 
-def render_host_email_html(inquiry, gcal_url):
+def render_host_email_html(inquiry, gcal_url, outlook_url, device_cal_url):
     """
     Renders clean, luxury responsive HTML email for the villa host/team notification.
     """
@@ -363,7 +444,7 @@ def render_host_email_html(inquiry, gcal_url):
                 </tr>
                 <tr>
                   <td style="padding: 10px 16px; border-bottom: 1px solid #e5e7eb; color: #6b7280; font-size: 13px;">Check-out Date</td>
-                  <td style="padding: 10px 16px; border-bottom: 1px solid #e5e7eb; color: #111827; font-size: 13px;">{check_out_display}</td>
+                  <td style="padding: 10px 16px; border-bottom: 1px solid #e5e7eb; color: #111827; font-size: 13px; font-weight: 600;">{check_out_display}</td>
                 </tr>
                 <tr>
                   <td style="padding: 10px 16px; border-bottom: 1px solid #e5e7eb; color: #6b7280; font-size: 13px;">Guest Count</td>
@@ -402,6 +483,13 @@ def render_host_email_html(inquiry, gcal_url):
                   <td align="center" style="padding-bottom: 10px;">
                     <a href="{gcal_url}" target="_blank" style="display: block; width: 85%; max-width: 320px; background-color: #f35525; color: #ffffff; text-decoration: none; padding: 12px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; text-align: center;">
                       Add to Host Google Calendar
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center">
+                    <a href="{device_cal_url}" target="_blank" style="display: block; width: 85%; max-width: 320px; background-color: #374151; color: #ffffff; text-decoration: none; padding: 12px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; text-align: center;">
+                      Download Host .ICS Calendar File
                     </a>
                   </td>
                 </tr>
@@ -497,27 +585,25 @@ def send_inquiry_notification(inquiry):
     """
     Sends email notification to the villa owners/managers when a booking inquiry is submitted.
     Also sends confirmation email to the guest if their email is provided.
-    Includes calendar invite (.ics) and Google Calendar link.
+    Includes RFC 5546 multipart calendar invite (auto-recognized by Gmail & Apple Mail),
+    Google Calendar API URL, Outlook URL, Yahoo URL, and direct device .ICS download link.
     """
     receivers = get_receiver_emails()
     from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'Grace Ville <graceville1911@gmail.com>')
     
-    # Generate calendar tools
+    # Generate multi-platform calendar links & RFC 5545 payload
     ics_content = generate_ics_invite(inquiry)
     gcal_url = get_google_calendar_url(inquiry)
+    outlook_url = get_outlook_calendar_url(inquiry)
+    yahoo_url = get_yahoo_calendar_url(inquiry)
+    device_cal_url = get_device_calendar_url(inquiry)
 
     # 1. Email to Villa Management / Host
-    subject = f"New Booking Inquiry: {inquiry.reference_id} - {inquiry.full_name}"
-    
-    body = f"""Hello Grace Ville Team,
     subject = f"New Booking Inquiry: {inquiry.reference_id} - {inquiry.full_name} ({inquiry.get_stay_type_display()})"
     text_body = f"""Hello Grace Ville Team,
 
 A new booking inquiry has been submitted on the Grace Ville website.
 
---------------------------------------------------
-BOOKING INQUIRY DETAILS
---------------------------------------------------
 Reference ID:     {inquiry.reference_id}
 Guest Name:       {inquiry.full_name}
 Phone / WhatsApp: {inquiry.phone}
@@ -526,79 +612,66 @@ Stay Package:     {inquiry.get_stay_type_display()}
 Check-in Date:    {inquiry.check_in_date or 'Flexible / Not specified'}
 Check-out Date:   {inquiry.check_out_date or 'Flexible / Not specified'}
 Number of Guests: {inquiry.number_of_guests}
-Special Requests:
-{inquiry.message or 'None'}
 Special Requests: {inquiry.message or 'None'}
 
---------------------------------------------------
-Submitted at: {inquiry.created_at.strftime('%Y-%m-%d %H:%M:%S')}
-Status:       {inquiry.get_status_display()}
 Submitted at:     {inquiry.created_at.strftime('%Y-%m-%d %H:%M:%S')}
-Add to Calendar:  {gcal_url}
-
-To view or manage this booking, log into the Admin Dashboard:
-https://your-domain.vercel.app/admin/villa/bookinginquiry/{inquiry.id}/change/
+Add to Google Calendar:  {gcal_url}
+Add to Outlook Calendar: {outlook_url}
+Download .ICS Calendar:  {device_cal_url}
 
 Best regards,
 Grace Ville Automated Booking System
 Saswad, Udachiwadi, Pune
 """
-    host_html = render_host_email_html(inquiry, gcal_url)
+    host_html = render_host_email_html(inquiry, gcal_url, outlook_url, device_cal_url)
 
     try:
-        send_mail(
         msg = EmailMultiAlternatives(
             subject=subject,
-            message=body,
             body=text_body,
             from_email=from_email,
-            recipient_list=receivers,
-            fail_silently=False,
             to=receivers,
         )
         msg.attach_alternative(host_html, "text/html")
         if ics_content:
+            # Attach as alternative text/calendar part so Gmail & Apple Mail auto-detect the RSVP card
+            msg.attach_alternative(ics_content, 'text/calendar; charset="utf-8"; method=REQUEST')
+            # Also attach as downloadable file for Outlook desktop / manual download
             msg.attach(
                 filename=f"graceville-{inquiry.reference_id}.ics",
                 content=ics_content,
-                mimetype="text/calendar; charset=UTF-8; method=REQUEST"
+                mimetype='text/calendar; charset="utf-8"; method=REQUEST'
             )
         msg.send(fail_silently=False)
         logger.info(f"Booking inquiry email notification sent to {receivers} for {inquiry.reference_id}")
     except Exception as e:
-        logger.error(f"Failed to send booking notification email: {e}")
         logger.error(f"Failed to send booking notification email to host: {e}")
 
     # 2. Confirmation Email to the Guest (if valid email provided)
     if inquiry.email and '@' in inquiry.email:
         guest_subject = f"Booking Inquiry Received - Grace Ville Villa (Ref: {inquiry.reference_id})"
-        guest_body = f"""Dear {inquiry.full_name},
         guest_text_body = f"""Dear {inquiry.full_name},
 
 Thank you for choosing Grace Ville! We have received your booking inquiry and our reservation concierge will reach out to you shortly to confirm your dates and package.
 
---------------------------------------------------
-YOUR INQUIRY SUMMARY
---------------------------------------------------
 YOUR INQUIRY SUMMARY:
 Booking Reference: {inquiry.reference_id}
 Package:           {inquiry.get_stay_type_display()}
 Guests:            {inquiry.number_of_guests}
 Check-in:          {inquiry.check_in_date or 'To be confirmed'}
+Check-out:         {inquiry.check_out_date or 'Next Day 11:00 AM'}
 Contact Phone:     {inquiry.phone}
 
---------------------------------------------------
-LOCATION & DIRECTIONS
---------------------------------------------------
-Add to Google Calendar: {gcal_url}
+ADD TO YOUR CALENDAR (FREE 1-TAP SYNC):
+Google Calendar:  {gcal_url}
+Apple / Device:   {device_cal_url}
+Outlook Calendar: {outlook_url}
+Yahoo Calendar:   {yahoo_url}
 
 LOCATION & DIRECTIONS:
 Grace Ville, Udachiwadi, Saswad, Pune, Maharashtra
-Google Maps: https://maps.app.goo.gl/UdachiwadiGraceVille
 Google Maps: https://maps.app.goo.gl/XPxZYJUyNyA1UPX79
 
-If you have urgent questions or wish to confirm immediately, connect directly on WhatsApp:
-https://wa.me/{getattr(settings, 'WHATSAPP_PHONE', '919876543210')}?text=Hi%20Grace%20Ville%20Team%2C%20inquiring%20about%20Ref%3A%20{inquiry.reference_id}
 WhatsApp Concierge:
 https://wa.me/{getattr(settings, 'WHATSAPP_PHONE', '917768956163')}?text=Hi%20Grace%20Ville%20Team%2C%20inquiring%20about%20Ref%3A%20{inquiry.reference_id}
 
@@ -606,25 +679,24 @@ Warm regards,
 The Grace Ville Team
 Relax, Celebrate & Reconnect with Nature
 """
-        guest_html = render_guest_email_html(inquiry, gcal_url)
+        guest_html = render_guest_email_html(inquiry, gcal_url, outlook_url, yahoo_url, device_cal_url)
 
         try:
-            send_mail(
             guest_msg = EmailMultiAlternatives(
                 subject=guest_subject,
-                message=guest_body,
                 body=guest_text_body,
                 from_email=from_email,
-                recipient_list=[inquiry.email],
-                fail_silently=True,
                 to=[inquiry.email],
             )
             guest_msg.attach_alternative(guest_html, "text/html")
             if ics_content:
+                # Attach as alternative text/calendar part so Gmail & Apple Mail auto-detect the RSVP card
+                guest_msg.attach_alternative(ics_content, 'text/calendar; charset="utf-8"; method=REQUEST')
+                # Also attach as downloadable file for Outlook desktop / manual download
                 guest_msg.attach(
                     filename=f"graceville-{inquiry.reference_id}.ics",
                     content=ics_content,
-                    mimetype="text/calendar; charset=UTF-8; method=REQUEST"
+                    mimetype='text/calendar; charset="utf-8"; method=REQUEST'
                 )
             guest_msg.send(fail_silently=True)
             logger.info(f"Guest confirmation email sent to {inquiry.email} for {inquiry.reference_id}")
@@ -640,7 +712,6 @@ def send_contact_message_notification(contact_msg):
     from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'Grace Ville <graceville1911@gmail.com>')
 
     subject = f"Contact Message from {contact_msg.full_name}: {contact_msg.subject or 'General Inquiry'}"
-    body = f"""Hello Grace Ville Team,
     text_body = f"""Hello Grace Ville Team,
 
 A visitor has submitted a contact message through the Grace Ville website.
@@ -660,14 +731,10 @@ Received at: {contact_msg.created_at.strftime('%Y-%m-%d %H:%M:%S')}
     html_body = render_contact_message_html(contact_msg)
 
     try:
-        send_mail(
         msg = EmailMultiAlternatives(
             subject=subject,
-            message=body,
             body=text_body,
             from_email=from_email,
-            recipient_list=receivers,
-            fail_silently=False,
             to=receivers,
         )
         msg.attach_alternative(html_body, "text/html")
@@ -675,4 +742,3 @@ Received at: {contact_msg.created_at.strftime('%Y-%m-%d %H:%M:%S')}
         logger.info(f"Contact email sent to {receivers}")
     except Exception as e:
         logger.error(f"Failed to send contact notification email: {e}")
-

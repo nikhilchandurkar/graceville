@@ -46,6 +46,14 @@ class BookingInquiryForm(forms.ModelForm):
             raise forms.ValidationError("Booking date cannot be in the past. Please choose today or a future date.")
         return date
 
+    def clean(self):
+        cleaned_data = super().clean()
+        check_in = cleaned_data.get('check_in_date')
+        check_out = cleaned_data.get('check_out_date')
+        if check_in and check_out and check_out < check_in:
+            self.add_error('check_out_date', "Check-out date cannot be earlier than check-in date.")
+        return cleaned_data
+
 
 class ContactMessageForm(forms.ModelForm):
     class Meta:
