@@ -122,12 +122,12 @@ git push -u origin main
 2. Click **"Add New..."** -> **"Project"**.
 3. Import your **`graceville-villa`** repository.
 4. In the Project Configuration screen:
-   - **Framework Preset**: Leave as *Other*.
+   - **Framework Preset**: **Django** (auto-detected)
    - **Root Directory**: Leave as `./` (default).
 5. Expand the **Environment Variables** section and add the keys from your `.env`:
    - `SECRET_KEY`: *(paste your secret key)*
    - `DEBUG`: `False`
-   - `ALLOWED_HOSTS`: `.vercel.app`
+   - `ALLOWED_HOSTS`: `*`
    - `CSRF_TRUSTED_ORIGINS`: `https://*.vercel.app`
    - `NOTIFICATION_RECEIVER_EMAIL`: `graceville1911@gmail.com,nikhilchandurkar24@gmail.com`
    - `WHATSAPP_PHONE`: `917768956163`

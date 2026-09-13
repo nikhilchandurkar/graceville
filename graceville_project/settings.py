@@ -15,15 +15,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / '.env')
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-xnoqfbwn&_##acq65sg4a)2+5!b6g%po2&j0z4mywmttyp+c#o')
+SECRET_KEY = os.environ.get('SECRET_KEY') or os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-xnoqfbwn&_##acq65sg4a)2+5!b6g%po2&j0z4mywmttyp+c#o')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'True').lower() in ('true', '1', 'yes')
+DEBUG = os.environ.get('DEBUG', 'False').lower() in ('true', '1', 'yes')
 
 raw_allowed_hosts = os.environ.get('ALLOWED_HOSTS', '*')
 ALLOWED_HOSTS = [h.strip() for h in raw_allowed_hosts.split(',') if h.strip()]
-if not ALLOWED_HOSTS:
-    ALLOWED_HOSTS = ['*']
+for default_host in ['.vercel.app', 'localhost', '127.0.0.1']:
+    if default_host not in ALLOWED_HOSTS and '*' not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append(default_host)
 
 # CSRF Trusted Origins for Vercel and custom domains
 raw_csrf = os.environ.get('CSRF_TRUSTED_ORIGINS', 'https://*.vercel.app,http://localhost:8000,http://127.0.0.1:8000')
