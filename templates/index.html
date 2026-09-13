@@ -147,42 +147,93 @@
   <div class="video section">
     <div class="container">
       <div class="row">
-        <div class="col-lg-6 offset-lg-3">
+        <div class="col-lg-8 offset-lg-2">
           <div class="section-heading text-center">
-            <h6>| Video Walkthrough</h6>
-            <h2>Experience The Natural Vibe of Grace Ville</h2>
+            <h6>| Photo Tour &amp; Highlights</h6>
+            <h2>Explore The Scenic Beauty of Grace Ville</h2>
+            <p class="mt-2 text-muted" style="font-size: 15px;">Swipe or click to view our private waterfall pool, mountain lounges, air-conditioned suites, and 360° sky sitout in Udachiwadi, Saswad.</p>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="video-content">
+  <div class="video-content" style="margin-top: -80px;">
     <div class="container">
       <div class="row">
         <div class="col-lg-10 offset-lg-1">
-          <div class="video-frame">
-            <img src="{% static 'assets/images/video-frame.jpg' %}" alt="Grace Ville Video Preview">
-            <a href="javascript:void(0);" class="play-btn" data-bs-toggle="modal" data-bs-target="#videoModal" title="Play Video Tour"><i class="fa fa-play"></i></a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+          <div id="villaPhotoCarousel" class="carousel slide carousel-fade shadow-lg" data-bs-ride="carousel" style="border-radius: 16px; overflow: hidden; border: 4px solid #fff;">
+            <!-- Carousel Indicators -->
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#villaPhotoCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#villaPhotoCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#villaPhotoCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+              <button type="button" data-bs-target="#villaPhotoCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+              <button type="button" data-bs-target="#villaPhotoCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
+              <button type="button" data-bs-target="#villaPhotoCarousel" data-bs-slide-to="5" aria-label="Slide 6"></button>
+            </div>
 
-  <!-- Video Modal -->
-  <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content bg-dark text-white">
-        <div class="modal-header border-0">
-          <h5 class="modal-title" id="videoModalLabel">Grace Ville Estate Walkthrough</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body p-0 modal-video-wrapper">
-          <video controls preload="metadata">
-            <source src="{% static 'assets/videos/walkthrough.mp4' %}" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
+            <!-- Carousel Items -->
+            <div class="carousel-inner">
+              <div class="carousel-item active" data-bs-interval="4500">
+                <img src="{% static 'assets/images/banner-01.jpg' %}" class="d-block w-100" alt="Grace Ville Illuminated Twilight" style="max-height: 520px; object-fit: cover;">
+                <div class="carousel-caption d-none d-md-block" style="background: rgba(0,0,0,0.6); border-radius: 12px; padding: 15px 25px; bottom: 30px;">
+                  <h4 style="color: #fff; font-weight: 700; margin-bottom: 5px;">Architectural Twilight Illumination</h4>
+                  <p style="color: #ddd; margin: 0; font-size: 14px;">Grace Ville illuminated at dusk amidst the tranquil foothills of Saswad.</p>
+                </div>
+              </div>
+
+              <div class="carousel-item" data-bs-interval="4500">
+                <img src="{% static 'assets/images/banner-02.jpg' %}" class="d-block w-100" alt="Waterfall Swimming Pool" style="max-height: 520px; object-fit: cover;">
+                <div class="carousel-caption d-none d-md-block" style="background: rgba(0,0,0,0.6); border-radius: 12px; padding: 15px 25px; bottom: 30px;">
+                  <h4 style="color: #fff; font-weight: 700; margin-bottom: 5px;">Private Waterfall Swimming Pool</h4>
+                  <p style="color: #ddd; margin: 0; font-size: 14px;">Cascading natural stone waterfall pool with slate-paved deck and sunset vistas.</p>
+                </div>
+              </div>
+
+              <div class="carousel-item" data-bs-interval="4500">
+                <img src="{% static 'assets/images/banner-03.jpg' %}" class="d-block w-100" alt="Grand Living and Dining Lounge" style="max-height: 520px; object-fit: cover;">
+                <div class="carousel-caption d-none d-md-block" style="background: rgba(0,0,0,0.6); border-radius: 12px; padding: 15px 25px; bottom: 30px;">
+                  <h4 style="color: #fff; font-weight: 700; margin-bottom: 5px;">Grand Living &amp; Dining Hall</h4>
+                  <p style="color: #ddd; margin: 0; font-size: 14px;">Plush leather sofas, 6-seater dining table, and high-bass JBL entertainment sound.</p>
+                </div>
+              </div>
+
+              <div class="carousel-item" data-bs-interval="4500">
+                <img src="{% static 'assets/images/deal-01.jpg' %}" class="d-block w-100" alt="Scenic Balcony Suite" style="max-height: 520px; object-fit: cover;">
+                <div class="carousel-caption d-none d-md-block" style="background: rgba(0,0,0,0.6); border-radius: 12px; padding: 15px 25px; bottom: 30px;">
+                  <h4 style="color: #fff; font-weight: 700; margin-bottom: 5px;">Scenic Mountain Balcony Suite</h4>
+                  <p style="color: #ddd; margin: 0; font-size: 14px;">King luxury bed with floor-to-ceiling sliding glass doors opening to Purandar valley.</p>
+                </div>
+              </div>
+
+              <div class="carousel-item" data-bs-interval="4500">
+                <img src="{% static 'assets/images/deal-03.jpg' %}" class="d-block w-100" alt="360 Rooftop Sky Sitout" style="max-height: 520px; object-fit: cover;">
+                <div class="carousel-caption d-none d-md-block" style="background: rgba(0,0,0,0.6); border-radius: 12px; padding: 15px 25px; bottom: 30px;">
+                  <h4 style="color: #fff; font-weight: 700; margin-bottom: 5px;">360° Panoramic Sky Terrace &amp; Sitout</h4>
+                  <p style="color: #ddd; margin: 0; font-size: 14px;">Rooftop timber dining lounge framing rolling hills, sunset horizons, and starry nights.</p>
+                </div>
+              </div>
+
+              <div class="carousel-item" data-bs-interval="4500">
+                <img src="{% static 'assets/images/property-05.jpg' %}" class="d-block w-100" alt="Modular Chef Kitchen" style="max-height: 520px; object-fit: cover;">
+                <div class="carousel-caption d-none d-md-block" style="background: rgba(0,0,0,0.6); border-radius: 12px; padding: 15px 25px; bottom: 30px;">
+                  <h4 style="color: #fff; font-weight: 700; margin-bottom: 5px;">Fully-Equipped Modular Kitchens</h4>
+                  <p style="color: #ddd; margin: 0; font-size: 14px;">3 kitchens with multi-burner gas stoves, cookware, and refrigeration for family feasts.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Carousel Controls -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#villaPhotoCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: rgba(0,0,0,0.5); border-radius: 50%; padding: 20px;"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#villaPhotoCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: rgba(0,0,0,0.5); border-radius: 50%; padding: 20px;"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -377,6 +428,7 @@
           <div class="section-heading text-center">
             <h6>| Contact &amp; Booking</h6>
             <h2>Reserve Your Stay At Grace Ville</h2>
+            <p class="mt-2"><a href="https://maps.app.goo.gl/XPxZYJUyNyA1UPX79" target="_blank" rel="noopener noreferrer" style="color: #f35525; font-weight: 600; text-decoration: underline;"><i class="fa fa-map-marker-alt"></i> Udachiwadi, Saswad (33 km from Pune) &rarr; Open in Google Maps</a></p>
           </div>
         </div>
       </div>
@@ -394,13 +446,13 @@
             <div class="col-lg-6">
               <div class="item phone">
                 <img src="{% static 'assets/images/phone-icon.png' %}" alt="" style="max-width: 52px;">
-                <h6><a href="tel:+917768956163" style="color: inherit;">+91 77689 56163</a><br><span>Concierge &amp; WhatsApp</span></h6>
+                <h6><span>+91 77689 56163</span><br><span>Concierge &amp; WhatsApp</span></h6>
               </div>
             </div>
             <div class="col-lg-6">
               <div class="item phone">
                 <img src="{% static 'assets/images/phone-icon.png' %}" alt="" style="max-width: 52px;">
-                <h6><a href="tel:+919699825732" style="color: inherit;">+91 96998 25732</a><br><span>Owner Direct</span></h6>
+                <h6><span>+91 96998 25732</span><br><span>Owner Direct</span></h6>
               </div>
             </div>
           </div>
@@ -510,7 +562,6 @@
     .then(data => {
       feedback.style.display = 'block';
       feedback.className = 'alert alert-success form-alert text-center mt-3';
-      feedback.innerHTML = `<strong>Booking Inquiry Saved!</strong><br>Booking Ref: <strong>${data.reference_id}</strong><br>Thank you ${name}. Our concierge has logged your request in the system and will contact you shortly.`;
       feedback.innerHTML = `
         <div style="font-size: 16px; margin-bottom: 8px;"><strong>🎉 Booking / Appointment Saved!</strong></div>
         <div>Booking Reference: <span style="background: #fff; color: #f35525; padding: 2px 8px; border-radius: 4px; font-weight: bold;">${data.reference_id}</span></div>
@@ -534,14 +585,6 @@
       submitBtn.innerText = 'Inquiry Received';
     });
   }
-
-  // Pause video when modal is closed
-  document.getElementById('videoModal').addEventListener('hidden.bs.modal', function () {
-    const vid = this.querySelector('video');
-    if (vid) {
-      vid.pause();
-    }
-  });
 </script>
 {% endblock %}
 

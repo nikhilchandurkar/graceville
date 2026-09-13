@@ -100,3 +100,4 @@ In [Vercel Dashboard](https://vercel.com):
 This project is licensed under the [MIT License](LICENSE).
 Curated architectural and estate photography © Grace Ville.
 Web layout adapted from TemplateMo Villa Agency.
+
