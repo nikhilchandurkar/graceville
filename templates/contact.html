@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact &amp; Location | Grace Ville – Saswad, Pune{% endblock %}
+
+{% block extra_head %}
+<style>
+  .quick-stats {
+    background: #fafafa;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    border: 1px solid #eee;
+  }
+  .quick-stats li {
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #4a4a4a;
+    list-style: none;
+  }
+  .quick-stats li i {
+    color: #f35525;
+    margin-right: 8px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+  <div class="page-heading header-text">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <span class="breadcrumb"><a href="{% url 'index' %}">Home</a> / Contact &amp; Location</span>
+          <h3>Plan Your Visit to Grace Ville</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-page section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="section-heading">
+            <h6>| Reach Out To Us</h6>
+            <h2>Relax, Celebrate &amp; Reconnect with Nature</h2>
+          </div>
+          <p>Welcome to <strong>Grace Ville</strong>, a beautiful private villa located in Udachiwadi, Saswad, just 33 km from Pune, near the proposed Purandar Airport.</p>
+          <p>Grace Ville is perfect for family vacations, weekend getaways, celebrations, get-togethers and relaxing day outings. The villa offers 3 air-conditioned bedrooms and 1 air-conditioned dormitory, with 5 washrooms and 3 kitchens, making it comfortable for families and groups.</p>
+          <p>We welcome both overnight guests and day visitors. Day guests can enjoy lunch, high tea or dinner, relax by the waterfall pool and spend quality time with family and friends in a beautiful natural setting.</p>
+
+          <ul class="quick-stats">
+            <li><i class="fa fa-clock"></i> <strong>Check-in:</strong> 12:00 PM &nbsp;|&nbsp; <strong>Check-out:</strong> 11:00 AM</li>
+            <li><i class="fa fa-swimming-pool"></i> <strong>Private Swimming Pool:</strong> With cascading waterfall feature</li>
+            <li><i class="fa fa-music"></i> <strong>Entertainment:</strong> High-power JBL music system</li>
+            <li><i class="fa fa-car"></i> <strong>Parking:</strong> Ample secure private parking on premises</li>
+            <li><i class="fa fa-hiking"></i> <strong>Nature Trails:</strong> Surrounding mountains for walks &amp; trekking</li>
+          </ul>
+
+          <div class="row mt-4 g-3">
+            <div class="col-lg-6">
+              <div class="item phone">
+                <img src="{% static 'assets/images/phone-icon.png' %}" alt="" style="max-width: 52px;">
+                <h6><a href="tel:+917768956163" style="color: inherit;">+91 77689 56163</a><br><span>Concierge &amp; WhatsApp</span></h6>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="item phone">
+                <img src="{% static 'assets/images/phone-icon.png' %}" alt="" style="max-width: 52px;">
+                <h6><a href="tel:+919699825732" style="color: inherit;">+91 96998 25732</a><br><span>Owner Contact</span></h6>
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <div class="item email">
+                <img src="{% static 'assets/images/email-icon.png' %}" alt="" style="max-width: 52px;">
+                <h6>reservations@graceville.in<br><span>Direct Inquiry Email</span></h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <form id="contact-form" onsubmit="submitDjangoBooking(event)">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-lg-12">
+                <span class="badge-pill mb-3">Direct Villa Reservation Form</span>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <label for="name">Full Name</label>
+                  <input type="text" name="name" id="name" placeholder="Your Full Name..." required>
+                </fieldset>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <label for="email">Email Address</label>
+                  <input type="email" name="email" id="email" placeholder="Your E-mail..." required>
+                </fieldset>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <label for="phone">Phone / WhatsApp Number</label>
+                  <input type="tel" name="phone" id="phone" placeholder="Your Phone Number..." required>
+                </fieldset>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <label for="stay_type">Stay Type</label>
+                  <label for="stay_type">Appointment / Booking Type</label>
+                  <select name="stay_type" id="stay_type" class="form-control mb-3" style="height: 44px; border-radius: 22px; border: 1px solid #eee; padding: 0 20px;">
+                    <option value="Overnight Stay (Check-in 12 PM, Check-out 11 AM)">Overnight Stay (Check-in 12:00 PM, Check-out 11:00 AM)</option>
+                    <option value="Day Outing (Lunch, High Tea / Dinner, Pool)">Day Outing (Lunch, High Tea / Dinner, Pool)</option>
+                    <option value="Family Celebration / Event">Family Celebration / Get-together</option>
+                    <option value="visit">🗓️ Pre-Visit / Site Inspection Appointment</option>
+                    <option value="Overnight Stay (Check-in 12 PM, Check-out 11 AM)" selected>🏡 Overnight Stay (Check-in 12:00 PM, Check-out 11:00 AM)</option>
+                    <option value="Day Outing (Lunch, High Tea / Dinner, Pool)">☀️ Day Outing (Lunch, High Tea / Dinner, Pool)</option>
+                    <option value="Family Celebration / Event">🎉 Family Celebration / Get-together</option>
+                  </select>
+                </fieldset>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <label for="message">Dates, Guest Count &amp; Special Requests</label>
+                  <textarea name="message" id="message" placeholder="Please mention your planned visit dates, number of adults and children, meal preferences..."></textarea>
+                  <label for="date">Preferred Date</label>
+                  <input type="date" name="date" id="date" class="form-control mb-3" style="height: 44px; border-radius: 22px; border: 1px solid #eee; padding: 0 20px;">
+                </fieldset>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <label for="message">Guest Count, Preferred Timing &amp; Special Requests</label>
+                  <textarea name="message" id="message" placeholder="Please mention number of guests, meal preferences, preferred visit slot..."></textarea>
+                </fieldset>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <button type="submit" id="form-submit" class="orange-button w-100 mb-3">Submit Booking Inquiry</button>
+                  <a id="whatsapp-quick" href="{{ WHATSAPP_CHAT_URL }}" target="_blank" class="whatsapp-btn w-100 justify-content-center">
+                    <i class="fab fa-whatsapp fa-lg"></i> Instant WhatsApp Booking
+                  </a>
+                </fieldset>
+                <div id="form-feedback" class="alert alert-success form-alert text-center mt-3"></div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-lg-12 mt-5">
+          <div class="section-heading">
+            <h6>| Exact Location</h6>
+            <h2>How to Reach Grace Ville, Udachiwadi, Saswad</h2>
+            <p class="mt-2">Located in peaceful Udachiwadi, Saswad, just 33 km from Pune City and near the upcoming Purandar Airport. Enjoy smooth highway access with stunning mountain views along the journey.</p>
+          </div>
+          <div id="map">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1210.6142253040089!2d74.07645044524065!3d18.385148144900654!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2e50027c4951f%3A0x8554229be7f93bd!2sGrace%20Ville!5e0!3m2!1sen!2sin!4v1789276742277!5m2!1sen!2sin" width="100%" height="450" style="border:0; border-radius: 10px; box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  function submitDjangoBooking(e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const stayType = document.getElementById('stay_type').value;
+    const date = document.getElementById('date') ? document.getElementById('date').value : '';
+    const message = document.getElementById('message').value;
+    const submitBtn = document.getElementById('form-submit');
+    const feedback = document.getElementById('form-feedback');
+
+    submitBtn.disabled = true;
+    submitBtn.innerText = 'Saving Booking to Database...';
+
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('email', email);
+    formData.append('phone', phone);
+    formData.append('stay_type', stayType);
+    formData.append('date', date);
+    formData.append('message', message);
+    formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+    fetch("{% url 'api_book' %}", {
+      method: 'POST',
+      body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+      feedback.style.display = 'block';
+      feedback.className = 'alert alert-success form-alert text-center mt-3';
+      feedback.innerHTML = `
+        <div style="font-size: 16px; margin-bottom: 8px;"><strong>🎉 Booking Inquiry Saved!</strong></div>
+        <div>Booking Reference: <span style="background: #fff; color: #f35525; padding: 2px 8px; border-radius: 4px; font-weight: bold;">${data.reference_id}</span></div>
+        <p class="mt-2 mb-3" style="font-size: 14px;">Thank you <strong>${name}</strong>. An email notification has been dispatched. Click below to verify instantly on WhatsApp:</p>
+        <a href="${data.whatsapp_url}" target="_blank" class="whatsapp-btn justify-content-center" style="display: inline-flex; width: auto; padding: 8px 18px; font-size: 14px;">
+          <i class="fab fa-whatsapp"></i> Confirm via WhatsApp Now
+        </a>
+      `;
+      submitBtn.innerText = 'Saved to Database';
+
+      const waBtn = document.getElementById('whatsapp-quick');
+      if (waBtn && data.whatsapp_url) {
+        waBtn.href = data.whatsapp_url;
+      }
+    })
+    .catch(err => {
+      feedback.style.display = 'block';
+      feedback.className = 'alert alert-warning form-alert text-center mt-3';
+      feedback.innerHTML = `<strong>Inquiry Received!</strong><br>Thank you ${name}. Our concierge will get back to you shortly at ${phone}.`;
+      submitBtn.innerText = 'Inquiry Received';
+    });
+  }
+</script>
+{% endblock %}
+

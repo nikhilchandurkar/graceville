@@ -1,0 +1,34 @@
+# Python Virtual Environments
+venv/
+env/
+ENV/
+.venv/
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Django
+*.log
+local_settings.py
+db.sqlite3-journal
+
+# Media files uploaded by users (optional)
+# media/
+
+# OS / Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Environment variables (keep secrets local, use .env.example for template)
+.env
+.env.*
+!.env.example
+
+# Static collection folder generated during build
+staticfiles/
+

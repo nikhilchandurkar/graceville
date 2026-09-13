@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Villa Details &amp; Amenities | Grace Ville – Saswad, Pune{% endblock %}
+
+{% block content %}
+  <div class="page-heading header-text">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <span class="breadcrumb"><a href="{% url 'index' %}">Home</a> / Villa Specifications</span>
+          <h3>Grace Ville Details &amp; Experience</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="single-property section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="main-image">
+            <img src="{% static 'assets/images/single-property.jpg' %}" alt="Grace Ville Evening Terrace &amp; Suites">
+          </div>
+          <div class="main-content">
+            <span class="category">Private Hillside Villa</span>
+            <h4>Grace Ville – Udachiwadi, Saswad (33 km from Pune)</h4>
+            <p>Welcome to <strong>Grace Ville</strong>, a beautiful private villa located in Udachiwadi, Saswad, just 33 km from Pune, near the proposed Purandar Airport. Whether you are planning a peaceful weekend stay, an anniversary celebration, or a memorable day outing, Grace Ville is the perfect place to relax, celebrate, and enjoy nature.</p>
+            <p>Grace Ville is thoughtfully designed for family vacations, weekend getaways, celebrations, get-togethers, and relaxing day outings. The villa offers <strong>3 air-conditioned bedrooms and 1 air-conditioned dormitory</strong>, with <strong>5 washrooms and 3 kitchens</strong>, making it comfortable for families and large groups alike.</p>
+            <p>Enjoy a refreshing experience with our <strong>swimming pool featuring a cascading waterfall</strong>, peaceful surroundings, ample private parking, and a high-bass <strong>JBL music system</strong> for entertainment. The surrounding mountains also offer invigorating opportunities for nature walks and trekking.</p>
+          </div> 
+          <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  Overnight Stay Details &amp; Timings
+                </button>
+              </h2>
+              <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <strong>Check-in: 12:00 PM | Check-out: 11:00 AM</strong><br>
+                  Overnight guests have exclusive, private access to all 3 AC master suites and the group AC dormitory, 5 clean washrooms with hot water geysers, the private swimming pool with waterfall, rooftop sky terrace, and 3 kitchens.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  Day Outing &amp; Event Packages
+                </button>
+              </h2>
+              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  We warmly welcome day visitors! Day guests can enjoy lunch, high tea, or dinner, relax by the waterfall pool, listen to music on the JBL sound system, and spend quality time with family and friends in a beautiful natural setting without needing an overnight stay.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  Kitchens, Catering &amp; Facilities
+                </button>
+              </h2>
+              <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  The property features <strong>3 separate kitchens</strong> equipped with gas stoves, refrigeration, appliances, and cookware. Guests can choose self-cooking, arrange custom local catering, or request barbecue and snacks by the poolside.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="info-table">
+            <ul>
+              <li>
+                <img src="{% static 'assets/images/info-icon-01.png' %}" alt="" style="max-width: 52px;">
+                <h4>3 AC Beds + Dorm<br><span>5 Washrooms &amp; 3 Kitchens</span></h4>
+              </li>
+              <li>
+                <img src="{% static 'assets/images/info-icon-02.png' %}" alt="" style="max-width: 52px;">
+                <h4>Check-in: 12:00 PM<br><span>Check-out: 11:00 AM</span></h4>
+              </li>
+              <li>
+                <img src="{% static 'assets/images/info-icon-03.png' %}" alt="" style="max-width: 52px;">
+                <h4>Waterfall Pool<br><span>Private Fresh Water</span></h4>
+              </li>
+              <li>
+                <img src="{% static 'assets/images/info-icon-04.png' %}" alt="" style="max-width: 52px;">
+                <h4>JBL Sound System<br><span>&amp; Ample Secure Parking</span></h4>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section best-deal">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="section-heading">
+            <h6>| Bookings &amp; Packages</h6>
+            <h2>Select Your Ideal Package</h2>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="tabs-content">
+            <div class="row">
+              <div class="nav-wrapper ">
+                <ul class="nav nav-tabs" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="appartment-tab" data-bs-toggle="tab" data-bs-target="#appartment" type="button" role="tab" aria-controls="appartment" aria-selected="true">Master Suite</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="villa-tab" data-bs-toggle="tab" data-bs-target="#villa" type="button" role="tab" aria-controls="villa" aria-selected="false">Full Villa Stay</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="penthouse-tab" data-bs-toggle="tab" data-bs-target="#penthouse" type="button" role="tab" aria-controls="penthouse" aria-selected="false">Day Outing Package</button>
+                  </li>
+                </ul>
+              </div>              
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="appartment" role="tabpanel" aria-labelledby="appartment-tab">
+                  <div class="row">
+                    <div class="col-lg-3">
+                      <div class="info-table">
+                        <ul>
+                          <li>Bed Type <span>King Luxury Bed</span></li>
+                          <li>Air Conditioning <span>Yes (AC)</span></li>
+                          <li>Balcony <span>Private Walkout</span></li>
+                          <li>Washroom <span>Attached Modern</span></li>
+                          <li>View <span>Valley &amp; Hills</span></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <img src="{% static 'assets/images/deal-01.jpg' %}" alt="Master Suite Bedroom">
+                    </div>
+                    <div class="col-lg-3">
+                      <h4>Luxury Master Bedroom Suite</h4>
+                      <p>Features king-size bedding, botanical accent wall, floor-to-ceiling sliding glass doors opening directly onto the scenic mountain balcony terrace.</p>
+                      <div class="d-flex flex-wrap gap-2 align-items-center mt-3">
+                        <a href="{% url 'contact' %}#contact-form" class="btn btn-dark" style="border-radius: 20px; font-size: 13px; padding: 8px 18px;"><i class="fa fa-calendar"></i> Book Now</a>
+                        <a href="{{ WHATSAPP_CHAT_URL }}" target="_blank" class="btn btn-success" style="background-color: #25d366; border: none; border-radius: 20px; font-size: 13px; padding: 8px 18px;"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="villa" role="tabpanel" aria-labelledby="villa-tab">
+                  <div class="row">
+                    <div class="col-lg-3">
+                      <div class="info-table">
+                        <ul>
+                          <li>Bedrooms <span>3 AC + 1 AC Dorm</span></li>
+                          <li>Washrooms <span>5 Washrooms</span></li>
+                          <li>Kitchens <span>3 Kitchens</span></li>
+                          <li>Private Pool <span>With Waterfall</span></li>
+                          <li>Music <span>JBL Sound System</span></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <img src="{% static 'assets/images/deal-02.jpg' %}" alt="Entire Villa Estate">
+                    </div>
+                    <div class="col-lg-3">
+                      <h4>Entire Villa Overnight Stay</h4>
+                      <p>Enjoy exclusive, uninterrupted access to all 3 AC bedrooms, 1 AC dorm, private pool with waterfall, rooftop terrace, and ample parking. Check-in 12:00 PM, Check-out 11:00 AM.</p>
+                      <div class="d-flex flex-wrap gap-2 align-items-center mt-3">
+                        <a href="{% url 'contact' %}#contact-form" class="btn btn-dark" style="border-radius: 20px; font-size: 13px; padding: 8px 18px;"><i class="fa fa-calendar"></i> Book Entire Villa</a>
+                        <a href="{{ WHATSAPP_CHAT_URL }}" target="_blank" class="btn btn-success" style="background-color: #25d366; border: none; border-radius: 20px; font-size: 13px; padding: 8px 18px;"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="penthouse" role="tabpanel" aria-labelledby="penthouse-tab">
+                  <div class="row">
+                    <div class="col-lg-3">
+                      <div class="info-table">
+                        <ul>
+                          <li>Timing <span>Flexible Day Hours</span></li>
+                          <li>Dining <span>Lunch, Tea &amp; Dinner</span></li>
+                          <li>Pool <span>Waterfall Access</span></li>
+                          <li>Activities <span>Trekking &amp; Music</span></li>
+                          <li>Parking <span>Ample on Premises</span></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <img src="{% static 'assets/images/deal-03.jpg' %}" alt="Day Outing &amp; Celebrations">
+                    </div>
+                    <div class="col-lg-3">
+                      <h4>Day Outing &amp; Celebrations</h4>
+                      <p>Ideal for family reunions, birthdays, corporate off-sites, and day trips from Pune. Relax by the pool and enjoy lunch and high tea with friends.</p>
+                      <div class="d-flex flex-wrap gap-2 align-items-center mt-3">
+                        <a href="{% url 'contact' %}#contact-form" class="btn btn-dark" style="border-radius: 20px; font-size: 13px; padding: 8px 18px;"><i class="fa fa-calendar"></i> Plan Day Visit</a>
+                        <a href="{{ WHATSAPP_CHAT_URL }}" target="_blank" class="btn btn-success" style="background-color: #25d366; border: none; border-radius: 20px; font-size: 13px; padding: 8px 18px;"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

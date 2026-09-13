@@ -1,0 +1,547 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Grace Ville – Relax, Celebrate &amp; Reconnect with Nature | Luxury Private Villa{% endblock %}
+
+{% block extra_head %}
+<style>
+  .video-frame {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+  }
+  .video-frame a.play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70px;
+    height: 70px;
+    background-color: #f35525;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    box-shadow: 0 0 25px rgba(243, 85, 37, 0.7);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .video-frame a.play-btn:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+    background-color: #1e1e1e;
+    color: #fff;
+  }
+  .modal-video-wrapper video {
+    width: 100%;
+    border-radius: 8px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+  <div class="main-banner">
+    <div class="owl-carousel owl-banner">
+      <div class="item item-1">
+        <div class="header-text">
+          <span class="category">Saswad, <em>33 km from Pune</em></span>
+          <h2>Relax, Celebrate &amp;<br>Reconnect with Nature</h2>
+        </div>
+      </div>
+      <div class="item item-2">
+        <div class="header-text">
+          <span class="category">Private Pool &amp; Waterfall</span>
+          <h2>A Refreshing Experience<br>Surrounded by Mountains</h2>
+        </div>
+      </div>
+      <div class="item item-3">
+        <div class="header-text">
+          <span class="category">Family &amp; Group Getaways</span>
+          <h2>3 AC Bedrooms, 1 AC Dorm<br>&amp; 5 Washrooms</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="featured section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="left-image">
+            <img src="{% static 'assets/images/featured.jpg' %}" alt="Grace Ville Floating Architectural Staircase">
+            <a href="{% url 'property_details' %}"><img src="{% static 'assets/images/featured-icon.png' %}" alt="" style="max-width: 60px; padding: 0px;"></a>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="section-heading">
+            <h6>| Welcome to Grace Ville</h6>
+            <h2>Your Private Hillside Sanctuary</h2>
+          </div>
+          <p class="mb-4">Welcome to <strong>Grace Ville</strong>, a beautiful private villa located in Udachiwadi, Saswad, just 33 km from Pune, near the proposed Purandar Airport. Whether you are planning a peaceful weekend stay or a memorable day outing, Grace Ville is the perfect place to relax, celebrate, and enjoy nature.</p>
+          <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  Accommodations &amp; Capacity
+                </button>
+              </h2>
+              <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  The villa offers <strong>3 air-conditioned bedrooms</strong> and <strong>1 spacious air-conditioned dormitory</strong>, accompanied by <strong>5 modern washrooms</strong> and <strong>3 kitchens</strong>, making it exceptionally comfortable for families, celebrations, and large groups.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  Swimming Pool &amp; Entertainment
+                </button>
+              </h2>
+              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  Enjoy our private <strong>swimming pool with a beautiful waterfall feature</strong>, surrounded by serene mountain foothills. For your celebrations, a high-power <strong>JBL music system</strong> is provided along with ample private secured parking.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  Overnight Stays &amp; Day Outings
+                </button>
+              </h2>
+              <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  We welcome both overnight guests and day visitors! Day guests can enjoy lunch, high tea, or dinner, unwind by the pool, and enjoy nature walks and trekking in the surrounding Purandar mountain trails.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="info-table">
+            <ul>
+              <li>
+                <img src="{% static 'assets/images/info-icon-01.png' %}" alt="" style="max-width: 52px;">
+                <h4>3 AC Beds + Dorm<br><span>5 Washrooms &amp; 3 Kitchens</span></h4>
+              </li>
+              <li>
+                <img src="{% static 'assets/images/info-icon-02.png' %}" alt="" style="max-width: 52px;">
+                <h4>Check-in: 12 PM<br><span>Check-out: 11 AM</span></h4>
+              </li>
+              <li>
+                <img src="{% static 'assets/images/info-icon-03.png' %}" alt="" style="max-width: 52px;">
+                <h4>Private Pool<br><span>With Waterfall Feature</span></h4>
+              </li>
+              <li>
+                <img src="{% static 'assets/images/info-icon-04.png' %}" alt="" style="max-width: 52px;">
+                <h4>JBL Sound System<br><span>&amp; Ample Parking</span></h4>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="video section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+          <div class="section-heading text-center">
+            <h6>| Video Walkthrough</h6>
+            <h2>Experience The Natural Vibe of Grace Ville</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="video-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-10 offset-lg-1">
+          <div class="video-frame">
+            <img src="{% static 'assets/images/video-frame.jpg' %}" alt="Grace Ville Video Preview">
+            <a href="javascript:void(0);" class="play-btn" data-bs-toggle="modal" data-bs-target="#videoModal" title="Play Video Tour"><i class="fa fa-play"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Video Modal -->
+  <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content bg-dark text-white">
+        <div class="modal-header border-0">
+          <h5 class="modal-title" id="videoModalLabel">Grace Ville Estate Walkthrough</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-0 modal-video-wrapper">
+          <video controls preload="metadata">
+            <source src="{% static 'assets/videos/walkthrough.mp4' %}" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fun-facts">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="wrapper">
+            <div class="row">
+              <div class="col-lg-3 col-6">
+                <div class="counter">
+                  <h2 class="timer count-title count-number" data-to="33" data-speed="1000"></h2>
+                   <p class="count-text">Kilometers<br>From Pune City</p>
+                </div>
+              </div>
+              <div class="col-lg-3 col-6">
+                <div class="counter">
+                  <h2 class="timer count-title count-number" data-to="4" data-speed="1000"></h2>
+                  <p class="count-text">AC Bedrooms<br>&amp; Dormitory</p>
+                </div>
+              </div>
+              <div class="col-lg-3 col-6">
+                <div class="counter">
+                  <h2 class="timer count-title count-number" data-to="5" data-speed="1000"></h2>
+                  <p class="count-text">Modern<br>Washrooms</p>
+                </div>
+              </div>
+              <div class="col-lg-3 col-6">
+                <div class="counter">
+                  <h2 class="timer count-title count-number" data-to="3" data-speed="1000"></h2>
+                  <p class="count-text">Equipped<br>Kitchens</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section best-deal">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-5">
+          <div class="section-heading">
+            <h6>| Tailored Packages</h6>
+            <h2>Choose Your Experience At Grace Ville</h2>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="tabs-content">
+            <div class="row">
+              <div class="nav-wrapper ">
+                <ul class="nav nav-tabs" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="overnight-tab" data-bs-toggle="tab" data-bs-target="#overnight" type="button" role="tab" aria-controls="overnight" aria-selected="true">Overnight Stay</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="dayouting-tab" data-bs-toggle="tab" data-bs-target="#dayouting" type="button" role="tab" aria-controls="dayouting" aria-selected="false">Day Outing &amp; Events</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="amenities-tab" data-bs-toggle="tab" data-bs-target="#amenities" type="button" role="tab" aria-controls="amenities" aria-selected="false">Amenities &amp; Sound</button>
+                  </li>
+                </ul>
+              </div>              
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="overnight" role="tabpanel" aria-labelledby="overnight-tab">
+                  <div class="row">
+                    <div class="col-lg-3">
+                      <div class="info-table">
+                        <ul>
+                          <li>Check-in Time <span>12:00 PM</span></li>
+                          <li>Check-out Time <span>11:00 AM</span></li>
+                          <li>AC Bedrooms <span>3 Private</span></li>
+                          <li>AC Dormitory <span>1 Group Dorm</span></li>
+                          <li>Washrooms <span>5 Total</span></li>
+                          <li>Kitchens <span>3 Available</span></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <img src="{% static 'assets/images/deal-01.jpg' %}" alt="Master Suite at Grace Ville">
+                    </div>
+                    <div class="col-lg-3">
+                      <h4>Peaceful Weekend &amp; Holiday Stays</h4>
+                      <p>Experience complete privacy and mountain serenity. Wake up to panoramic hilltop views, cool morning breezes, and freshly prepared meals in our multiple kitchens.</p>
+                      <div class="icon-button">
+                        <a href="#contact-section"><i class="fa fa-calendar"></i> Book Overnight Stay</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="dayouting" role="tabpanel" aria-labelledby="dayouting-tab">
+                  <div class="row">
+                    <div class="col-lg-3">
+                      <div class="info-table">
+                        <ul>
+                          <li>Ideal For <span>Family &amp; Groups</span></li>
+                          <li>Dining Options <span>Lunch &amp; High Tea</span></li>
+                          <li>Pool Access <span>Included</span></li>
+                          <li>Music System <span>JBL Sound</span></li>
+                          <li>Outdoor Fun <span>Trekking / Walks</span></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <img src="{% static 'assets/images/deal-02.jpg' %}" alt="Day Outing at Grace Ville">
+                    </div>
+                    <div class="col-lg-3">
+                      <h4>Memorable Day Getaways</h4>
+                      <p>Day visitors can enjoy lunch, high tea, or dinner, relax by the waterfall pool, and spend quality time with loved ones in an exclusive, nature-rich atmosphere.</p>
+                      <div class="icon-button">
+                        <a href="#contact-section"><i class="fa fa-calendar"></i> Plan Day Outing</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="amenities" role="tabpanel" aria-labelledby="amenities-tab">
+                  <div class="row">
+                    <div class="col-lg-3">
+                      <div class="info-table">
+                        <ul>
+                          <li>Private Pool <span>With Waterfall</span></li>
+                          <li>Sound System <span>JBL Entertainment</span></li>
+                          <li>Parking <span>Ample &amp; Secure</span></li>
+                          <li>Orchard <span>Mango &amp; Berries</span></li>
+                          <li>Sky Terrace <span>360° Mountain View</span></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <img src="{% static 'assets/images/deal-03.jpg' %}" alt="Rooftop Terrace Grace Ville">
+                    </div>
+                    <div class="col-lg-3">
+                      <h4>Celebrations &amp; Entertainment</h4>
+                      <p>From birthday bashes and anniversaries to corporate unwinds, enjoy our high-bass JBL music setup, rooftop sunset sitout, and surrounding scenic hiking trails.</p>
+                      <div class="icon-button">
+                        <a href="#contact-section"><i class="fa fa-calendar"></i> Inquire Now</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="properties section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+          <div class="section-heading text-center">
+            <h6>| Villa Highlights</h6>
+            <h2>Explore The Spaces At Grace Ville</h2>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        {% for space in spaces %}
+        <div class="col-lg-4 col-md-6">
+          <div class="item">
+            <a href="{% url 'property_details' %}"><img src="{% static space.image_rel_path %}" alt="{{ space.title }}"></a>
+            <span class="category">{{ space.subtitle }}</span>
+            <h6>{{ space.category|title }}</h6>
+            <h4><a href="{% url 'property_details' %}">{{ space.title }}</a></h4>
+            <ul>
+              {% if space.spec_1 %}<li>{{ space.spec_1 }}</li>{% endif %}
+              {% if space.spec_2 %}<li>{{ space.spec_2 }}</li>{% endif %}
+              {% if space.spec_3 %}<li>{{ space.spec_3 }}</li>{% endif %}
+              {% if space.spec_4 %}<li>{{ space.spec_4 }}</li>{% endif %}
+              {% if space.spec_5 %}<li>{{ space.spec_5 }}</li>{% endif %}
+            </ul>
+            <div class="main-button">
+              <a href="{% url 'property_details' %}">View Details</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="contact section" id="contact-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+          <div class="section-heading text-center">
+            <h6>| Contact &amp; Booking</h6>
+            <h2>Reserve Your Stay At Grace Ville</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7">
+          <div id="map">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1210.6142253040089!2d74.07645044524065!3d18.385148144900654!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2e50027c4951f%3A0x8554229be7f93bd!2sGrace%20Ville!5e0!3m2!1sen!2sin!4v1789276742277!5m2!1sen!2sin" width="100%" height="450" style="border:0; border-radius: 10px; box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          </div>
+          <div class="row g-2 mt-2">
+            <div class="col-lg-6">
+              <div class="item phone">
+                <img src="{% static 'assets/images/phone-icon.png' %}" alt="" style="max-width: 52px;">
+                <h6><a href="tel:+917768956163" style="color: inherit;">+91 77689 56163</a><br><span>Concierge &amp; WhatsApp</span></h6>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="item phone">
+                <img src="{% static 'assets/images/phone-icon.png' %}" alt="" style="max-width: 52px;">
+                <h6><a href="tel:+919699825732" style="color: inherit;">+91 96998 25732</a><br><span>Owner Direct</span></h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <form id="contact-form" onsubmit="submitDjangoBooking(event)">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-lg-12">
+                <span class="badge-pill mb-3">Book Overnight Stay or Day Outing</span>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <label for="name">Full Name</label>
+                  <input type="text" name="name" id="name" placeholder="Your Name..." required>
+                </fieldset>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <label for="email">Email Address</label>
+                  <input type="email" name="email" id="email" placeholder="Your E-mail..." required>
+                </fieldset>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <label for="phone">Phone / WhatsApp Number</label>
+                  <input type="tel" name="phone" id="phone" placeholder="Your Phone Number..." required>
+                </fieldset>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <label for="stay_type">Stay Type</label>
+                  <label for="stay_type">Appointment / Booking Type</label>
+                  <select name="stay_type" id="stay_type" class="form-control mb-3" style="height: 44px; border-radius: 22px; border: 1px solid #eee; padding: 0 20px;">
+                    <option value="Overnight Stay (Check-in 12 PM, Check-out 11 AM)">Overnight Stay (Check-in 12:00 PM, Check-out 11:00 AM)</option>
+                    <option value="Day Outing (Lunch, High Tea / Dinner, Pool)">Day Outing (Lunch, High Tea / Dinner, Pool)</option>
+                    <option value="Family Celebration / Event">Family Celebration / Get-together</option>
+                    <option value="visit">🗓️ Pre-Visit / Site Inspection Appointment</option>
+                    <option value="Overnight Stay (Check-in 12 PM, Check-out 11 AM)" selected>🏡 Overnight Private Villa Stay (3 AC Beds + Dorm)</option>
+                    <option value="Day Outing (Lunch, High Tea / Dinner, Pool)">☀️ Day Outing Package (Lunch, High Tea, Pool)</option>
+                    <option value="Family Celebration / Event">🎉 Family Celebration / Get-together</option>
+                  </select>
+                </fieldset>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <label for="message">Dates &amp; Guest Count / Requirements</label>
+                  <textarea name="message" id="message" placeholder="Preferred dates, expected number of guests, meal requirements..."></textarea>
+                  <label for="date">Preferred Date</label>
+                  <input type="date" name="date" id="date" class="form-control mb-3" style="height: 44px; border-radius: 22px; border: 1px solid #eee; padding: 0 20px;">
+                </fieldset>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <label for="message">Guest Count &amp; Special Requests</label>
+                  <textarea name="message" id="message" placeholder="Estimated number of guests, meal requirements, preferred appointment timing..."></textarea>
+                </fieldset>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <button type="submit" id="form-submit" class="orange-button w-100 mb-3">Submit Booking Inquiry</button>
+                  <a id="whatsapp-quick" href="https://wa.me/?text=Hi%20Grace%20Ville%2C%20I%20would%20like%20to%20inquire%20about%20booking%20the%20villa." target="_blank" class="whatsapp-btn w-100 justify-content-center">
+                  <a id="whatsapp-quick" href="{{ WHATSAPP_CHAT_URL }}" target="_blank" class="whatsapp-btn w-100 justify-content-center">
+                    <i class="fab fa-whatsapp fa-lg"></i> Instant WhatsApp Booking
+                  </a>
+                </fieldset>
+                <div id="form-feedback" class="alert alert-success form-alert text-center mt-3"></div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  function submitDjangoBooking(e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const stayType = document.getElementById('stay_type').value;
+    const date = document.getElementById('date') ? document.getElementById('date').value : '';
+    const message = document.getElementById('message').value;
+    const submitBtn = document.getElementById('form-submit');
+    const feedback = document.getElementById('form-feedback');
+
+    submitBtn.disabled = true;
+    submitBtn.innerText = 'Saving Booking to Database...';
+
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('email', email);
+    formData.append('phone', phone);
+    formData.append('stay_type', stayType);
+    formData.append('date', date);
+    formData.append('message', message);
+    formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+    fetch("{% url 'api_book' %}", {
+      method: 'POST',
+      body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+      feedback.style.display = 'block';
+      feedback.className = 'alert alert-success form-alert text-center mt-3';
+      feedback.innerHTML = `<strong>Booking Inquiry Saved!</strong><br>Booking Ref: <strong>${data.reference_id}</strong><br>Thank you ${name}. Our concierge has logged your request in the system and will contact you shortly.`;
+      feedback.innerHTML = `
+        <div style="font-size: 16px; margin-bottom: 8px;"><strong>🎉 Booking / Appointment Saved!</strong></div>
+        <div>Booking Reference: <span style="background: #fff; color: #f35525; padding: 2px 8px; border-radius: 4px; font-weight: bold;">${data.reference_id}</span></div>
+        <p class="mt-2 mb-3" style="font-size: 14px;">Thank you <strong>${name}</strong>. An email notification has been dispatched. Click below to verify instantly on WhatsApp:</p>
+        <a href="${data.whatsapp_url}" target="_blank" class="whatsapp-btn justify-content-center" style="display: inline-flex; width: auto; padding: 8px 18px; font-size: 14px;">
+          <i class="fab fa-whatsapp"></i> Confirm via WhatsApp Now
+        </a>
+      `;
+      submitBtn.innerText = 'Saved to Database';
+
+      // Update WhatsApp quick link with pre-filled message
+      const waBtn = document.getElementById('whatsapp-quick');
+      if (waBtn && data.whatsapp_url) {
+        waBtn.href = data.whatsapp_url;
+      }
+    })
+    .catch(err => {
+      feedback.style.display = 'block';
+      feedback.className = 'alert alert-warning form-alert text-center mt-3';
+      feedback.innerHTML = `<strong>Inquiry Received!</strong><br>Thank you ${name}. Our team will contact you at ${phone}.`;
+      submitBtn.innerText = 'Inquiry Received';
+    });
+  }
+
+  // Pause video when modal is closed
+  document.getElementById('videoModal').addEventListener('hidden.bs.modal', function () {
+    const vid = this.querySelector('video');
+    if (vid) {
+      vid.pause();
+    }
+  });
+</script>
+{% endblock %}
+

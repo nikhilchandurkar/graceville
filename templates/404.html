@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}404 - Page Not Found | Grace Ville, Saswad, Pune{% endblock %}
+
+{% block extra_head %}
+<style>
+  .error-page {
+    padding: 120px 0;
+    text-align: center;
+  }
+  .error-page h1 {
+    font-size: 110px;
+    font-weight: 900;
+    color: #f35525;
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+  .error-page h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1e1e1e;
+    margin-bottom: 15px;
+  }
+  .error-page p {
+    font-size: 16px;
+    color: #666;
+    max-width: 580px;
+    margin: 0 auto 35px auto;
+    line-height: 28px;
+  }
+  .action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+  .btn-custom {
+    display: inline-block;
+    background-color: #f35525;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    height: 48px;
+    line-height: 48px;
+    padding: 0 30px;
+    border-radius: 25px;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  .btn-custom:hover {
+    background-color: #1e1e1e;
+    color: #fff;
+  }
+  .btn-secondary-custom {
+    display: inline-block;
+    background-color: #1e1e1e;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    height: 48px;
+    line-height: 48px;
+    padding: 0 30px;
+    border-radius: 25px;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  .btn-secondary-custom:hover {
+    background-color: #f35525;
+    color: #fff;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+  <div class="page-heading header-text">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <span class="breadcrumb"><a href="{% url 'index' %}">Home</a> / 404 Error</span>
+          <h3>Lost in the Wilderness?</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="error-page">
+    <div class="container">
+      <h1>404</h1>
+      <h2>Oops! This Trail Leads Somewhere Else</h2>
+      <p>The page you are looking for might have been moved, renamed, or is temporarily unavailable. Don't worry, your serene retreat at Grace Ville is just a click away.</p>
+      <div class="action-buttons">
+        <a href="{% url 'index' %}" class="btn-custom"><i class="fa fa-home"></i> Return to Homepage</a>
+        <a href="{% url 'properties' %}" class="btn-secondary-custom"><i class="fa fa-images"></i> View Villa Spaces</a>
+        <a href="{% url 'contact' %}" class="btn-custom" style="background-color: #25d366;"><i class="fab fa-whatsapp"></i> Chat with Concierge</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

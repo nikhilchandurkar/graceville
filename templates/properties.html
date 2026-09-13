@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Gallery &amp; Spaces | Grace Ville – Relax, Celebrate &amp; Reconnect with Nature{% endblock %}
+
+{% block content %}
+  <div class="page-heading header-text">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <span class="breadcrumb"><a href="{% url 'index' %}">Home</a> / Spaces &amp; Amenities</span>
+          <h3>Villa Spaces &amp; Gallery</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section properties">
+    <div class="container">
+      <ul class="properties-filter">
+        <li>
+          <a class="is_active" href="#!" data-filter="*">Show All Spaces</a>
+        </li>
+        <li>
+          <a href="#!" data-filter=".outdoor">Pool &amp; Outdoors</a>
+        </li>
+        <li>
+          <a href="#!" data-filter=".bedrooms">Bedrooms &amp; Dorm</a>
+        </li>
+        <li>
+          <a href="#!" data-filter=".indoor">Living &amp; Kitchen</a>
+        </li>
+        <li>
+          <a href="#!" data-filter=".terrace">Sky Terraces</a>
+        </li>
+      </ul>
+      <div class="row properties-box">
+        {% for space in spaces %}
+        <div class="col-lg-4 col-md-6 align-self-center mb-30 properties-items {{ space.category }}">
+          <div class="item">
+            <a href="{% url 'property_details' %}"><img src="{% static space.image_rel_path %}" alt="{{ space.title }}"></a>
+            <span class="category">{{ space.subtitle }}</span>
+            <h6>{{ space.category|title }}</h6>
+            <h4><a href="{% url 'property_details' %}">{{ space.title }}</a></h4>
+            <ul>
+              {% if space.spec_1 %}<li>{{ space.spec_1 }}</li>{% endif %}
+              {% if space.spec_2 %}<li>{{ space.spec_2 }}</li>{% endif %}
+              {% if space.spec_3 %}<li>{{ space.spec_3 }}</li>{% endif %}
+              {% if space.spec_4 %}<li>{{ space.spec_4 }}</li>{% endif %}
+              {% if space.spec_5 %}<li>{{ space.spec_5 }}</li>{% endif %}
+            </ul>
+            <div class="main-button">
+              <a href="{% url 'property_details' %}">View Details</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="row">
+        <div class="col-lg-12 text-center mt-4">
+          <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <div class="main-button">
+              <a href="{% url 'contact' %}">Book Overnight Stay or Day Outing</a>
+            </div>
+            <div>
+              <a href="{{ WHATSAPP_CHAT_URL }}" target="_blank" class="whatsapp-btn">
+                <i class="fab fa-whatsapp fa-lg"></i> Inquire on WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

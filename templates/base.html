@@ -1,0 +1,465 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Grace Ville is a luxury private villa in Udachiwadi, Saswad, just 33 km from Pune near Purandar Airport. Featuring 3 AC bedrooms, 1 AC dormitory, private waterfall pool, 3 kitchens, 5 washrooms, JBL music system, and mountain views. Perfect for family vacations, day outings, and celebrations.">
+    <meta name="keywords" content="Grace Ville, Grace Ville Saswad, villa in Saswad, private villa near Pune, villa near Purandar Airport, pool villa Pune, luxury villa with swimming pool, weekend getaway Pune, day outing villa Saswad, villa rental Pune, private party villa Pune">
+    <meta name="author" content="Grace Ville">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook / WhatsApp Preview -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://graceville.vercel.app/">
+    <meta property="og:title" content="Grace Ville – Luxury Private Villa in Saswad, Pune">
+    <meta property="og:description" content="Relax, Celebrate &amp; Reconnect with Nature. 3 AC Bedrooms + 1 AC Dorm, Private Waterfall Swimming Pool, 3 Kitchens, JBL Sound, only 33 km from Pune.">
+    <meta property="og:image" content="https://graceville.vercel.app{% static 'assets/images/banner-01.jpg' %}">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Grace Ville – Luxury Private Villa in Saswad, Pune">
+    <meta name="twitter:description" content="Private pool villa in Saswad, Pune near Purandar Airport. Overnight stays &amp; day outing packages.">
+    <meta name="twitter:image" content="https://graceville.vercel.app{% static 'assets/images/banner-01.jpg' %}">
+
+    <!-- Schema.org JSON-LD Structured Data for Google Rich Results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Resort",
+      "name": "Grace Ville",
+      "image": "https://graceville.vercel.app{% static 'assets/images/banner-01.jpg' %}",
+      "description": "Grace Ville is a luxury private villa in Udachiwadi, Saswad, 33 km from Pune near Purandar Airport. Offers 3 AC bedrooms, 1 AC dormitory, private waterfall pool, 3 kitchens, 5 washrooms, and mountain trekking.",
+      "telephone": "+917768956163",
+      "email": "reservations@graceville.in",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Udachiwadi, Saswad",
+        "addressLocality": "Saswad, Pune",
+        "addressRegion": "Maharashtra",
+        "postalCode": "412301",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "18.385148",
+        "longitude": "74.076450"
+      },
+      "url": "https://graceville.vercel.app/",
+      "priceRange": "₹₹",
+      "amenityFeature": [
+        {"@type": "LocationFeatureSpecification", "name": "Private Waterfall Swimming Pool", "value": "true"},
+        {"@type": "LocationFeatureSpecification", "name": "3 AC Bedrooms & 1 AC Dormitory", "value": "true"},
+        {"@type": "LocationFeatureSpecification", "name": "3 Fully-Equipped Kitchens", "value": "true"},
+        {"@type": "LocationFeatureSpecification", "name": "High-Power JBL Music System", "value": "true"},
+        {"@type": "LocationFeatureSpecification", "name": "Ample Private Parking", "value": "true"}
+      ]
+    }
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <title>{% block title %}Grace Ville – Luxury Private Villa &amp; Sanctuary | Saswad, Pune{% endblock %}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/templatemo-villa-agency.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/owl.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/animate.css' %}">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+
+    <style>
+      /* Absolute logo wrapping fix */
+      .header-area .main-nav {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+      }
+      .header-area .main-nav .logo {
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        margin-right: 15px !important;
+        text-decoration: none !important;
+      }
+      .header-area .main-nav .logo h1 {
+        font-size: 24px !important;
+        letter-spacing: 1.5px !important;
+        white-space: nowrap !important;
+        display: inline-block !important;
+        margin: 0 !important;
+        line-height: 100px !important;
+        color: #1e1e1e !important;
+      }
+      .background-header .main-nav .logo h1 {
+        line-height: 80px !important;
+      }
+      .header-area .main-nav ul.nav {
+        flex-grow: 1 !important;
+        flex-shrink: 1 !important;
+        white-space: nowrap !important;
+        justify-content: flex-end !important;
+        margin-top: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+      }
+      .header-area .main-nav .nav li {
+        padding-left: 6px !important;
+        padding-right: 6px !important;
+      }
+      .header-area .main-nav .nav li a {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+        font-size: 14px !important;
+      }
+
+      .badge-pill {
+        display: inline-block;
+        background: #f35525;
+        color: #fff;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 5px 14px;
+        border-radius: 20px;
+        margin-bottom: 12px;
+      }
+      .form-alert {
+        display: none;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 15px;
+      }
+      .whatsapp-btn {
+        background-color: #25d366;
+        color: #fff !important;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 24px;
+        border-radius: 25px;
+        font-weight: 500;
+        transition: all 0.3s;
+        text-decoration: none;
+      }
+      .whatsapp-btn:hover {
+        background-color: #128c7e;
+        color: #fff !important;
+        transform: translateY(-2px);
+      }
+      .django-msg-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 99999;
+        max-width: 420px;
+      }
+      /* Floating WhatsApp Concierge Button */
+      .whatsapp-float-btn {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        z-index: 99999;
+        background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+        color: #fff !important;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 20px;
+        border-radius: 50px;
+        box-shadow: 0 4px 18px rgba(37, 211, 102, 0.45);
+        font-weight: 600;
+        font-size: 14px;
+        text-decoration: none;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+      .whatsapp-float-btn i {
+        font-size: 22px;
+      }
+      .whatsapp-float-btn:hover {
+        transform: translateY(-3px) scale(1.04);
+        box-shadow: 0 8px 24px rgba(37, 211, 102, 0.6);
+        color: #fff !important;
+      }
+      @media (max-width: 576px) {
+        .whatsapp-float-label {
+          display: none;
+        }
+        .whatsapp-float-btn {
+          padding: 14px;
+          border-radius: 50%;
+          bottom: 20px;
+          right: 20px;
+        }
+        .whatsapp-float-btn i {
+          font-size: 24px;
+        }
+      }
+    </style>
+    {% block extra_head %}{% endblock %}
+  </head>
+
+<body>
+
+  <!-- ***** Preloader Start ***** -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Preloader End ***** -->
+
+  <!-- Django Notification Messages -->
+  {% if messages %}
+  <div class="django-msg-container">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show shadow" role="alert">
+      <strong>{{ message }}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="sub-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-9 col-md-9">
+          <ul class="info">
+            <li><a href="tel:+917768956163" style="color: #7a7a7a;"><i class="fa fa-phone"></i> {{ WHATSAPP_PHONE_FORMATTED }}</a></li>
+            <li><a href="tel:+919699825732" style="color: #7a7a7a;"><i class="fa fa-user"></i> {{ OWNER_PHONE_FORMATTED }} (Owner)</a></li>
+            <li><i class="fa fa-map-marker"></i> Udachiwadi, Saswad (33 km from Pune)</li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-3">
+          <ul class="social-links">
+            <li><a href="https://maps.app.goo.gl/Udachiwadi" target="_blank" title="Google Maps"><i class="fa fa-map"></i></a></li>
+            <li><a href="{{ WHATSAPP_CHAT_URL }}" target="_blank" title="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a></li>
+            <li><a href="{% url 'contact' %}" title="Contact Us"><i class="fa fa-envelope"></i></a></li>
+            <li><a href="{% url 'properties' %}" title="Villa Gallery"><i class="fa fa-images"></i></a></li>
+            <li><a href="/admin/" target="_blank" title="Admin Portal"><i class="fa fa-user-shield"></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="{% url 'index' %}" class="logo">
+                        <h1>Grace Ville</h1>
+                    </a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                      <li><a href="{% url 'index' %}" class="{% if active_page == 'home' %}active{% endif %}">Home</a></li>
+                      <li><a href="{% url 'properties' %}" class="{% if active_page == 'properties' %}active{% endif %}">Gallery &amp; Spaces</a></li>
+                      <li><a href="{% url 'property_details' %}" class="{% if active_page == 'property_details' %}active{% endif %}">Villa Details</a></li>
+                      <li><a href="{% url 'contact' %}" class="{% if active_page == 'contact' %}active{% endif %}">Contact &amp; Location</a></li>
+                      <li><a href="#appointmentModal" data-bs-toggle="modal" data-bs-target="#appointmentModal"><i class="fa fa-calendar"></i> Schedule a Visit</a></li>
+                  </ul>   
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+
+  {% block content %}{% endblock %}
+
+  <footer>
+    <div class="container">
+      <div class="col-lg-12 text-center">
+        <p>Copyright © 2026 <strong>Grace Ville</strong>. Relax, Celebrate &amp; Reconnect with Nature. Udachiwadi, Saswad, Pune. All rights reserved. &nbsp;|&nbsp; <a href="/admin/" style="color: #f35525;">Staff Portal</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'assets/js/isotope.min.js' %}"></script>
+  <script src="{% static 'assets/js/owl-carousel.js' %}"></script>
+  <script src="{% static 'assets/js/counter.js' %}"></script>
+  <script src="{% static 'assets/js/custom.js' %}"></script>
+
+  <!-- CSRF Helper for AJAX -->
+  <script>
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+  </script>
+
+  <!-- Universal Appointment & Visit Booking Modal -->
+  <div class="modal fade" id="appointmentModal" tabindex="-1" aria-labelledby="appointmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content" style="border-radius: 16px; overflow: hidden; border: none; box-shadow: 0 10px 40px rgba(0,0,0,0.25);">
+        <div class="modal-header" style="background: #1e1e1e; color: #fff; padding: 20px 25px;">
+          <div>
+            <span style="background: #f35525; font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 4px 10px; border-radius: 12px; letter-spacing: 1px;">Online Appointments</span>
+            <h4 class="modal-title mt-1" id="appointmentModalLabel" style="color: #fff; font-weight: 700; font-size: 20px;">Schedule a Visit or Book Grace Ville</h4>
+            <p class="mb-0 text-white-50" style="font-size: 13px;">Udachiwadi, Saswad (33 km from Pune)</p>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          <form id="modal-appointment-form" onsubmit="submitModalAppointment(event)">
+            {% csrf_token %}
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label fw-bold" style="font-size: 13px;">Full Name *</label>
+                <input type="text" id="modal_name" class="form-control" placeholder="Your Full Name" required style="border-radius: 8px; padding: 10px 14px;">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold" style="font-size: 13px;">Phone / WhatsApp *</label>
+                <input type="tel" id="modal_phone" class="form-control" placeholder="+91 98765 43210" required style="border-radius: 8px; padding: 10px 14px;">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold" style="font-size: 13px;">Email Address</label>
+                <input type="email" id="modal_email" class="form-control" placeholder="yourname@gmail.com" style="border-radius: 8px; padding: 10px 14px;">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold" style="font-size: 13px;">Appointment / Booking Type *</label>
+                <select id="modal_stay_type" class="form-select" required style="border-radius: 8px; padding: 10px 14px;">
+                  <option value="visit">🗓️ Pre-Visit / Site Inspection Appointment</option>
+                  <option value="overnight" selected>🏡 Overnight Private Villa Stay (3 AC Beds + Dorm)</option>
+                  <option value="day_outing">☀️ Day Outing Package (Lunch, Pool, High Tea)</option>
+                  <option value="celebration">🎉 Family Celebration / Event / Get-Together</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label fw-bold" style="font-size: 13px;">Preferred Date *</label>
+                <input type="date" id="modal_date" class="form-control" required style="border-radius: 8px; padding: 10px 14px;">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label fw-bold" style="font-size: 13px;">Preferred Slot / Timing</label>
+                <select id="modal_time_slot" class="form-select" style="border-radius: 8px; padding: 10px 14px;">
+                  <option value="Morning (10:00 AM - 1:00 PM)">Morning (10:00 AM - 1:00 PM)</option>
+                  <option value="Afternoon (2:00 PM - 5:00 PM)">Afternoon (2:00 PM - 5:00 PM)</option>
+                  <option value="Full Day (10:00 AM - 6:00 PM)">Full Day (10:00 AM - 6:00 PM)</option>
+                  <option value="Overnight Stay (12:00 PM Check-in)">Overnight Stay (12:00 PM Check-in)</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label fw-bold" style="font-size: 13px;">Estimated Guests</label>
+                <input type="number" id="modal_guests" class="form-control" value="6" min="1" max="50" style="border-radius: 8px; padding: 10px 14px;">
+              </div>
+              <div class="col-12">
+                <label class="form-label fw-bold" style="font-size: 13px;">Special Requests / Notes</label>
+                <textarea id="modal_message" class="form-control" rows="2" placeholder="Mention preferred visit time, event requirements, food preferences..." style="border-radius: 8px;"></textarea>
+              </div>
+              <div class="col-12 mt-3">
+                <button type="submit" id="modal-submit-btn" class="btn w-100 fw-bold text-white mb-2" style="background: #f35525; border-radius: 25px; padding: 12px; font-size: 15px;">
+                  <i class="fa fa-calendar-check me-2"></i> Confirm Appointment / Booking
+                </button>
+                <a id="modal-wa-btn" href="{{ WHATSAPP_CHAT_URL }}" target="_blank" class="whatsapp-btn w-100 justify-content-center">
+                  <i class="fab fa-whatsapp fa-lg"></i> Inquire Directly on WhatsApp
+                </a>
+              </div>
+            </div>
+          </form>
+          <div id="modal-feedback" class="alert mt-3" style="display: none; border-radius: 10px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function submitModalAppointment(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('modal-submit-btn');
+      const feedback = document.getElementById('modal-feedback');
+      const name = document.getElementById('modal_name').value;
+      const phone = document.getElementById('modal_phone').value;
+      const email = document.getElementById('modal_email').value;
+      const stayType = document.getElementById('modal_stay_type').value;
+      const date = document.getElementById('modal_date').value;
+      const timeSlot = document.getElementById('modal_time_slot').value;
+      const guests = document.getElementById('modal_guests').value;
+      const message = document.getElementById('modal_message').value;
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Saving Appointment...';
+
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('phone', phone);
+      formData.append('email', email);
+      formData.append('stay_type', stayType);
+      formData.append('date', date);
+      formData.append('time_slot', timeSlot);
+      formData.append('guests', guests);
+      formData.append('message', message);
+      formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+      fetch("{% url 'api_book' %}", {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        feedback.style.display = 'block';
+        feedback.className = 'alert alert-success text-center mt-3';
+        feedback.innerHTML = `
+          <div style="font-size: 17px; margin-bottom: 6px;"><strong>🎉 Appointment Confirmed!</strong></div>
+          <div>Booking Ref: <span style="background: #fff; color: #f35525; padding: 3px 10px; border-radius: 6px; font-weight: bold;">${data.reference_id}</span></div>
+          <p class="mt-2 mb-3" style="font-size: 13px;">Thank you <strong>${name}</strong>. An email notification has been dispatched. Click below to verify and chat directly with our concierge on WhatsApp:</p>
+          <a href="${data.whatsapp_url}" target="_blank" class="whatsapp-btn justify-content-center" style="display: inline-flex; width: auto; padding: 10px 22px; font-size: 14px;">
+            <i class="fab fa-whatsapp"></i> Chat on WhatsApp with Ref
+          </a>
+        `;
+        submitBtn.innerHTML = '<i class="fa fa-check"></i> Appointment Registered';
+        const waBtn = document.getElementById('modal-wa-btn');
+        if (waBtn && data.whatsapp_url) {
+          waBtn.href = data.whatsapp_url;
+        }
+      })
+      .catch(err => {
+        feedback.style.display = 'block';
+        feedback.className = 'alert alert-warning text-center mt-3';
+        feedback.innerHTML = `<strong>Appointment Received!</strong><br>Thank you ${name}. Our concierge will contact you at ${phone}.`;
+        submitBtn.innerHTML = '<i class="fa fa-calendar-check me-2"></i> Confirm Appointment / Booking';
+        submitBtn.disabled = false;
+      });
+    }
+  </script>
+
+  <!-- Floating WhatsApp Concierge Widget -->
+  <a href="{{ WHATSAPP_CHAT_URL }}" class="whatsapp-float-btn" target="_blank" rel="noopener noreferrer" title="Chat with Grace Ville Concierge on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+    <span class="whatsapp-float-label">Book on WhatsApp</span>
+  </a>
+
+  </body>
+</html>
+
