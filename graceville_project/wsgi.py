@@ -6,6 +6,8 @@ Also exposes ``app`` for Vercel serverless Python runtime.
 """
 
 import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'graceville_project.settings')
@@ -38,4 +40,5 @@ if os.environ.get('VERCEL') or os.environ.get('VERCEL_ENV'):
             u.save()
     except Exception:
         pass
+
 
