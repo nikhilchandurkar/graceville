@@ -30,5 +30,6 @@ Thumbs.db
 !.env.example
 
 # Static collection folder generated during build
-staticfiles/
+
+
 
