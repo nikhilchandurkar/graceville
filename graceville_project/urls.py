@@ -53,9 +53,22 @@ urlpatterns = [
     path('', include('villa.urls')),
 ]
 
-if True:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+from django.urls import re_path
+from django.views.static import serve
+
+urlpatterns += [
+    re_path(r'^media/(?P<path>.*)
 
 handler404 = 'villa.views.custom_404_view'
+
+, serve, {'document_root': settings.MEDIA_ROOT}),
+    re_path(r'^static/(?P<path>.*)
+
+handler404 = 'villa.views.custom_404_view'
+
+, serve, {'document_root': settings.STATIC_ROOT}),
+]
+
+handler404 = 'villa.views.custom_404_view'
+
 
