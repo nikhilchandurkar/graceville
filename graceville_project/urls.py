@@ -1,8 +1,9 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf import settings
-from django.conf.urls.static import static
 from django.http import HttpResponse
+from django.views.generic.base import RedirectView
+from django.views.static import serve
 
 # Customize Django Admin Header
 admin.site.site_header = "Grace Ville Administration"
@@ -43,8 +44,6 @@ def sitemap_xml(request):
 </urlset>"""
     return HttpResponse(content, content_type="application/xml")
 
-from django.views.generic.base import RedirectView
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('robots.txt', robots_txt, name='robots_txt'),
@@ -53,22 +52,8 @@ urlpatterns = [
     path('', include('villa.urls')),
 ]
 
-from django.urls import re_path
-from django.views.static import serve
-
 urlpatterns += [
-    re_path(r'^media/(?P<path>.*)
-
-handler404 = 'villa.views.custom_404_view'
-
-, serve, {'document_root': settings.MEDIA_ROOT}),
-    re_path(r'^static/(?P<path>.*)
-
-handler404 = 'villa.views.custom_404_view'
-
-, serve, {'document_root': settings.STATIC_ROOT}),
+    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 ]
 
 handler404 = 'villa.views.custom_404_view'
-
-
