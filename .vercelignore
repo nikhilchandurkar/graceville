@@ -1,0 +1,3 @@
+# Exclude huge video files from Vercel deployment to prevent exceeding the 250MB Max Lambda Size limit.
+media/videos/*.mp4
+

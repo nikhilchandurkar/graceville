@@ -137,7 +137,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Media files
 MEDIA_URL = '/media/'
@@ -171,3 +171,4 @@ CONTACT_EMAIL = os.environ.get('CONTACT_EMAIL', 'graceville1911@gmail.com')
 # WhatsApp Host / Concierge Phone (International format without '+' sign)
 WHATSAPP_PHONE = os.environ.get('WHATSAPP_PHONE', '917768956163')
 OWNER_PHONE = os.environ.get('OWNER_PHONE', '919699825732')
+

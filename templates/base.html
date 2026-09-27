@@ -798,7 +798,8 @@
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
                       <li><a href="{% url 'index' %}" class="{% if active_page == 'home' %}active{% endif %}">Home</a></li>
-                      <li><a href="{% url 'properties' %}" class="{% if active_page == 'properties' %}active{% endif %}">Gallery &amp; Spaces</a></li>
+                      <li><a href="{% url 'gallery' %}" class="{% if active_page == 'gallery' %}active{% endif %}">Photo Gallery</a></li>
+                      <li><a href="{% url 'properties' %}" class="{% if active_page == 'properties' %}active{% endif %}">Spaces</a></li>
                       <li><a href="{% url 'property_details' %}" class="{% if active_page == 'property_details' %}active{% endif %}">Villa Details</a></li>
                       <li><a href="{% url 'contact' %}" class="{% if active_page == 'contact' %}active{% endif %}">Contact &amp; Location</a></li>
                       <li><a href="#appointmentModal" data-bs-toggle="modal" data-bs-target="#appointmentModal"><i class="fa fa-calendar-check"></i> Schedule a Visit</a></li>

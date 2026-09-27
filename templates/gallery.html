@@ -1,0 +1,378 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Premium Gallery | Grace Ville{% endblock %}
+
+{% block extra_head %}
+<style>
+  /* Modern Designer Gallery Styles */
+  .gallery-container {
+    padding: 60px 0;
+    background-color: #fafafa;
+  }
+  .gallery-section-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 35px;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+    display: inline-block;
+    position: relative;
+  }
+  .gallery-section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 40%;
+    height: 4px;
+    background: linear-gradient(90deg, #f35525, #ff8a66);
+    border-radius: 2px;
+  }
+  
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-auto-rows: 300px;
+    gap: 25px;
+    margin-bottom: 70px;
+  }
+  
+  /* Feature items for masonry feel on large screens */
+  @media (min-width: 992px) {
+    .card-wide { grid-column: span 2; }
+    .card-tall { grid-row: span 2; }
+  }
+
+  .gallery-card {
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    background: #000;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    cursor: pointer;
+  }
+  
+  .gallery-card:hover {
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    transform: translateY(-8px);
+    z-index: 2;
+  }
+  
+  .gallery-media {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease;
+    opacity: 0.95;
+  }
+  
+  .gallery-card:hover .gallery-media {
+    transform: scale(1.08);
+    opacity: 0.75; /* Darken slightly to make text pop */
+  }
+  
+  .gallery-overlay {
+    position: absolute;
+    bottom: 0; 
+    left: 0; 
+    right: 0;
+    padding: 50px 25px 25px;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0) 100%);
+    color: white;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    pointer-events: none;
+  }
+  
+  .gallery-card:hover .gallery-overlay {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .gallery-overlay h5 {
+    color: #fff;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+  }
+
+  .gallery-overlay p {
+    color: #ddd;
+    font-size: 0.9rem;
+    margin: 5px 0 0 0;
+    font-weight: 400;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s ease 0.1s;
+  }
+  
+  .gallery-card:hover .gallery-overlay p {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Video specific styles */
+  .video-card {
+    pointer-events: auto;
+  }
+  .video-card .gallery-media {
+    opacity: 1;
+  }
+  .video-badge {
+    position: absolute;
+    top: 20px; 
+    right: 20px;
+    background: rgba(243, 85, 37, 0.95);
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    z-index: 10;
+    box-shadow: 0 4px 15px rgba(243, 85, 37, 0.4);
+    backdrop-filter: blur(5px);
+    pointer-events: none;
+  }
+  
+  /* Video Controls Optimization */
+  video {
+    border-radius: 18px;
+    outline: none;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+  <div class="page-heading header-text">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <span class="breadcrumb"><a href="{% url 'index' %}">Home</a> / Experience</span>
+          <h3>The Grace Ville Experience</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gallery-container">
+    <div class="container">
+      
+      <!-- Video Tours Section (Moved to Top for Impact) -->
+      <h2 class="gallery-section-title">Cinematic Video Tours</h2>
+      <div class="gallery-grid" style="grid-auto-rows: 350px;">
+        <div class="gallery-card video-card card-wide">
+          <div class="video-badge"><i class="fa fa-play-circle"></i> 4K Tour</div>
+          <video class="gallery-media" controls muted preload="none" poster="/media/exterior/graceville_daytime_architecture.jpg">
+            <source src="/media/videos/graceville_estate_grounds_4k_4.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="gallery-card video-card">
+          <div class="video-badge"><i class="fa fa-leaf"></i> Garden</div>
+          <video class="gallery-media" controls muted preload="none" poster="/media/exterior/graceville_villa_garden_sideview.jpg">
+            <source src="/media/videos/graceville_garden_walkway_tour_1.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="gallery-card video-card">
+          <div class="video-badge"><i class="fa fa-tree"></i> Orchard</div>
+          <video class="gallery-media" controls muted preload="none" poster="/media/exterior/graceville_orchard_garden_aerial.jpg">
+            <source src="/media/videos/graceville_orchard_walkthrough_tour_2.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="gallery-card video-card">
+          <div class="video-badge"><i class="fa fa-mountain"></i> Nature</div>
+          <video class="gallery-media" controls muted preload="none" poster="/media/pool/graceville_swimming_pool_hillside_view.jpg">
+            <source src="/media/videos/graceville_estate_nature_video_3.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <!-- Exterior -->
+      <h2 class="gallery-section-title">Estate Architecture</h2>
+      <div class="gallery-grid">
+        <div class="gallery-card card-wide">
+          <img class="gallery-media" src="/media/exterior/graceville_daytime_architecture.jpg" alt="Grace Ville Architecture" loading="lazy">
+          <div class="gallery-overlay">
+            <h5>Majestic Villa Facade</h5>
+            <p>Modern architectural design blending seamlessly with the natural landscape.</p>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img class="gallery-media" src="/media/exterior/graceville_front_porch_entrance.jpg" alt="Front Porch" loading="lazy">
+          <div class="gallery-overlay">
+            <h5>Grand Entrance</h5>
+            <p>A welcoming approach to your private sanctuary.</p>
+          </div>
+        </div>
+        <div class="gallery-card card-tall">
+          <img class="gallery-media" src="/media/exterior/graceville_orchard_garden_aerial.jpg" alt="Orchard Garden" loading="lazy">
+          <div class="gallery-overlay">
+            <h5>Lush Orchard Garden</h5>
+            <p>Acres of private greenery for peaceful morning walks.</p>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img class="gallery-media" src="/media/exterior/graceville_upper_terrace_view.jpg" alt="Upper Terrace" loading="lazy">
+          <div class="gallery-overlay">
+            <h5>Upper Skyline Terrace</h5>
+            <p>Panoramic views of the surrounding hillsides.</p>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img class="gallery-media" src="/media/exterior/graceville_villa_garden_sideview.jpg" alt="Garden Sideview" loading="lazy">
+          <div class="gallery-overlay">
+            <h5>Manicured Lawns</h5>
+            <p>Perfectly maintained spaces for outdoor activities.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pool & Terrace -->
+      <h2 class="gallery-section-title">Pool &amp; Recreation</h2>
+      <div class="gallery-grid">
+        <div class="gallery-card card-wide">
+          <img class="gallery-media" src="/media/pool/graceville_swimming_pool_waterfall_sunset.jpg" alt="Waterfall Sunset" loading="lazy">
+          <div class="gallery-overlay">
+            <h5>Waterfall Pool at Sunset</h5>
+            <p>Experience golden hour by the soothing cascades of our private pool.</p>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img class="gallery-media" src="/media/pool/graceville_swimming_pool_daytime_gazebo.jpg" alt="Daytime Gazebo Pool" loading="lazy">
+          <div class="gallery-overlay">
+            <h5>Crystal Clear Waters</h5>
+            <p>Refresh yourself under the open sky.</p>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img class="gallery-media" src="/media/pool/graceville_swimming_pool_hillside_view.jpg" alt="Hillside Pool View" loading="lazy">
+          <div class="gallery-overlay">
+            <h5>Hillside Infinity Feel</h5>
+            <p>Swim while overlooking the lush valleys.</p>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img class="gallery-media" src="/media/terrace_sitout/graceville_covered_timber_ceiling_sitout.jpg" alt="Timber Ceiling Sitout" loading="lazy">
+          <div class="gallery-overlay">
+            <h5>Timber Sit-out Lounge</h5>
+            <p>Covered relaxation area for evening teas.</p>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img class="gallery-media" src="/media/terrace_sitout/graceville_rooftop_sunset_terrace_sitout.jpg" alt="Rooftop Sunset" loading="lazy">
+          <div class="gallery-overlay">
+            <h5>Rooftop Sunset Deck</h5>
+            <p>The ultimate vantage point for breathtaking sunsets.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Living & Dining -->
+      <h2 class="gallery-section-title">Living &amp; Entertaining</h2>
+      <div class="gallery-grid">
+        <div class="gallery-card card-tall">
+          <img class="gallery-media" src="/media/living_dining/graceville_ground_living_dining_grand_hall.jpg" alt="Grand Hall" loading="lazy">
+          <div class="gallery-overlay">
+            <h5>The Grand Hall</h5>
+            <p>Expansive double-height living spaces designed for gathering.</p>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img class="gallery-media" src="/media/living_dining/graceville_1st_floor_mountain_view_lounge.jpg" alt="Mountain View Lounge" loading="lazy">
+          <div class="gallery-overlay">
+            <h5>Mountain View Lounge</h5>
+            <p>Cozy upper lounge with floor-to-ceiling windows.</p>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img class="gallery-media" src="/media/living_dining/graceville_architectural_floating_staircase.jpg" alt="Floating Staircase" loading="lazy">
+          <div class="gallery-overlay">
+            <h5>Floating Staircase</h5>
+            <p>A striking interior architectural centerpiece.</p>
+          </div>
+        </div>
+        <div class="gallery-card card-wide">
+          <img class="gallery-media" src="/media/living_dining/graceville_ground_formal_dining.jpg" alt="Formal Dining" loading="lazy">
+          <div class="gallery-overlay">
+            <h5>Formal Dining Area</h5>
+            <p>Share meals and memories in an elegant setting.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bedrooms -->
+      <h2 class="gallery-section-title">Luxury Suites</h2>
+      <div class="gallery-grid">
+        <div class="gallery-card card-wide">
+          <img class="gallery-media" src="/media/bedrooms/graceville_master_bedroom_terrace_suite.jpg" alt="Master Bedroom" loading="lazy">
+          <div class="gallery-overlay">
+            <h5>Master Terrace Suite</h5>
+            <p>Premium suite featuring direct access to the scenic walkout terrace.</p>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img class="gallery-media" src="/media/bedrooms/graceville_sunset_glow_bedroom.jpg" alt="Sunset Glow Bedroom" loading="lazy">
+          <div class="gallery-overlay">
+            <h5>Sunset Glow Bedroom</h5>
+            <p>Bathed in natural warm light every evening.</p>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img class="gallery-media" src="/media/bedrooms/graceville_corner_mountain_view_suite.jpg" alt="Mountain View Suite" loading="lazy">
+          <div class="gallery-overlay">
+            <h5>Corner View Suite</h5>
+            <p>Dual aspect windows bringing nature indoors.</p>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img class="gallery-media" src="/media/bedrooms/graceville_ground_floor_guest_bedroom.png" alt="Guest Bedroom" loading="lazy">
+          <div class="gallery-overlay">
+            <h5>Accessible Guest Suite</h5>
+            <p>Comfortable ground floor accommodation.</p>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img class="gallery-media" src="/media/bedrooms/graceville_1st_floor_dormitory_terrace_walkout.jpg" alt="Dormitory Terrace" loading="lazy">
+          <div class="gallery-overlay">
+            <h5>Group Dormitory</h5>
+            <p>Spacious arrangement perfect for larger families or groups.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kitchen & Bath -->
+      <h2 class="gallery-section-title">Amenities</h2>
+      <div class="gallery-grid">
+        <div class="gallery-card">
+          <img class="gallery-media" src="/media/kitchen_bath/graceville_designer_bathroom_rain_shower.jpg" alt="Rain Shower" loading="lazy">
+          <div class="gallery-overlay">
+            <h5>Spa-Style Rain Showers</h5>
+            <p>Modern fixtures for ultimate relaxation.</p>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img class="gallery-media" src="/media/kitchen_bath/graceville_modern_washroom_geyser.jpg" alt="Modern Washroom" loading="lazy">
+          <div class="gallery-overlay">
+            <h5>Pristine Washrooms</h5>
+            <p>Immaculate and fully equipped.</p>
+          </div>
+        </div>
+        <div class="gallery-card card-wide">
+          <img class="gallery-media" src="/media/kitchen_bath/graceville_fully_equipped_kitchen_appliances.jpg" alt="Equipped Kitchen" loading="lazy">
+          <div class="gallery-overlay">
+            <h5>Chef's Kitchen</h5>
+            <p>Fully equipped with modern appliances for your culinary needs.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% endblock %}

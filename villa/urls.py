@@ -11,4 +11,6 @@ urlpatterns = [
     # Free Public Calendar Endpoints (iPhone / Android / Outlook / Mac 1-Tap Sync)
     path('booking/<str:ref_id>/calendar.ics', views.download_calendar_ics, name='download_calendar_ics'),
     path('api/calendar/<str:ref_id>.ics', views.download_calendar_ics, name='api_download_calendar_ics'),
+    path('gallery/', views.gallery, name='gallery'),
 ]
+

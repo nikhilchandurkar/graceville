@@ -76,7 +76,7 @@
         <div class="col-lg-5">
           <div class="section-heading">
             <h6>| Welcome to Grace Ville</h6>
-            <h2>Your Private Hillside Sanctuary</h2>
+            <h1 style="font-size: 2.2rem; font-weight: 700; margin-top: 10px;">Your Private Hillside Sanctuary</h1>
           </div>
           <p class="mb-4">Welcome to <strong>Grace Ville</strong>, a beautiful private villa located in Udachiwadi, Saswad, just 33 km from Pune, near the proposed Purandar Airport. Whether you are planning a peaceful weekend stay or a memorable day outing, Grace Ville is the perfect place to relax, celebrate, and enjoy nature.</p>
           <div class="accordion" id="accordionExample">
@@ -122,19 +122,19 @@
           <div class="info-table">
             <ul>
               <li>
-                <img src="{% static 'assets/images/info-icon-01.png' %}" alt="" style="max-width: 52px;">
+                <img loading="lazy" src="{% static 'assets/images/info-icon-01.png' %}" alt="" style="max-width: 52px;">
                 <h4>3 AC Beds + Dorm<br><span>5 Washrooms &amp; 3 Kitchens</span></h4>
               </li>
               <li>
-                <img src="{% static 'assets/images/info-icon-02.png' %}" alt="" style="max-width: 52px;">
+                <img loading="lazy" src="{% static 'assets/images/info-icon-02.png' %}" alt="" style="max-width: 52px;">
                 <h4>Check-in: 12 PM<br><span>Check-out: 11 AM</span></h4>
               </li>
               <li>
-                <img src="{% static 'assets/images/info-icon-03.png' %}" alt="" style="max-width: 52px;">
+                <img loading="lazy" src="{% static 'assets/images/info-icon-03.png' %}" alt="" style="max-width: 52px;">
                 <h4>Private Pool<br><span>With Waterfall Feature</span></h4>
               </li>
               <li>
-                <img src="{% static 'assets/images/info-icon-04.png' %}" alt="" style="max-width: 52px;">
+                <img loading="lazy" src="{% static 'assets/images/info-icon-04.png' %}" alt="" style="max-width: 52px;">
                 <h4>JBL Sound System<br><span>&amp; Ample Parking</span></h4>
               </li>
             </ul>
@@ -162,7 +162,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-10 offset-lg-1">
-          <div id="villaPhotoCarousel" class="carousel slide carousel-fade shadow-lg" data-bs-ride="carousel" style="border-radius: 16px; overflow: hidden; border: 4px solid #fff;">
+          <div id="villaPhotoCarousel" class="carousel slide carousel-fade shadow" data-bs-ride="carousel" style="border-radius: 16px; overflow: hidden;">
             <!-- Carousel Indicators -->
             <div class="carousel-indicators">
               <button type="button" data-bs-target="#villaPhotoCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -176,7 +176,7 @@
             <!-- Carousel Items -->
             <div class="carousel-inner">
               <div class="carousel-item active" data-bs-interval="4500">
-                <img src="{% static 'assets/images/banner-01.jpg' %}" class="d-block w-100" alt="Grace Ville Illuminated Twilight" style="max-height: 520px; object-fit: cover;">
+                <img src="{% static 'assets/images/banner-01.jpg' %}" class="d-block w-100" alt="Grace Ville Illuminated Twilight" style="height: 520px; width: 100%; object-fit: cover;">
                 <div class="carousel-caption d-none d-md-block" style="background: rgba(0,0,0,0.6); border-radius: 12px; padding: 15px 25px; bottom: 30px;">
                   <h4 style="color: #fff; font-weight: 700; margin-bottom: 5px;">Architectural Twilight Illumination</h4>
                   <p style="color: #ddd; margin: 0; font-size: 14px;">Grace Ville illuminated at dusk amidst the tranquil foothills of Saswad.</p>
@@ -184,7 +184,7 @@
               </div>
 
               <div class="carousel-item" data-bs-interval="4500">
-                <img src="{% static 'assets/images/banner-02.jpg' %}" class="d-block w-100" alt="Waterfall Swimming Pool" style="max-height: 520px; object-fit: cover;">
+                <img src="{% static 'assets/images/banner-02.jpg' %}" class="d-block w-100" alt="Waterfall Swimming Pool" style="height: 520px; width: 100%; object-fit: cover;">
                 <div class="carousel-caption d-none d-md-block" style="background: rgba(0,0,0,0.6); border-radius: 12px; padding: 15px 25px; bottom: 30px;">
                   <h4 style="color: #fff; font-weight: 700; margin-bottom: 5px;">Private Waterfall Swimming Pool</h4>
                   <p style="color: #ddd; margin: 0; font-size: 14px;">Cascading natural stone waterfall pool with slate-paved deck and sunset vistas.</p>
@@ -192,7 +192,7 @@
               </div>
 
               <div class="carousel-item" data-bs-interval="4500">
-                <img src="{% static 'assets/images/banner-03.jpg' %}" class="d-block w-100" alt="Grand Living and Dining Lounge" style="max-height: 520px; object-fit: cover;">
+                <img src="{% static 'assets/images/banner-03.jpg' %}" class="d-block w-100" alt="Grand Living and Dining Lounge" style="height: 520px; width: 100%; object-fit: cover;">
                 <div class="carousel-caption d-none d-md-block" style="background: rgba(0,0,0,0.6); border-radius: 12px; padding: 15px 25px; bottom: 30px;">
                   <h4 style="color: #fff; font-weight: 700; margin-bottom: 5px;">Grand Living &amp; Dining Hall</h4>
                   <p style="color: #ddd; margin: 0; font-size: 14px;">Plush leather sofas, 6-seater dining table, and high-bass JBL entertainment sound.</p>
@@ -200,7 +200,7 @@
               </div>
 
               <div class="carousel-item" data-bs-interval="4500">
-                <img src="{% static 'assets/images/deal-01.jpg' %}" class="d-block w-100" alt="Scenic Balcony Suite" style="max-height: 520px; object-fit: cover;">
+                <img loading="lazy" src="{% static 'assets/images/deal-01.jpg' %}" class="d-block w-100" alt="Scenic Balcony Suite" style="height: 520px; width: 100%; object-fit: cover;">
                 <div class="carousel-caption d-none d-md-block" style="background: rgba(0,0,0,0.6); border-radius: 12px; padding: 15px 25px; bottom: 30px;">
                   <h4 style="color: #fff; font-weight: 700; margin-bottom: 5px;">Scenic Mountain Balcony Suite</h4>
                   <p style="color: #ddd; margin: 0; font-size: 14px;">King luxury bed with floor-to-ceiling sliding glass doors opening to Purandar valley.</p>
@@ -208,7 +208,7 @@
               </div>
 
               <div class="carousel-item" data-bs-interval="4500">
-                <img src="{% static 'assets/images/deal-03.jpg' %}" class="d-block w-100" alt="360 Rooftop Sky Sitout" style="max-height: 520px; object-fit: cover;">
+                <img loading="lazy" src="{% static 'assets/images/deal-03.jpg' %}" class="d-block w-100" alt="360 Rooftop Sky Sitout" style="height: 520px; width: 100%; object-fit: cover;">
                 <div class="carousel-caption d-none d-md-block" style="background: rgba(0,0,0,0.6); border-radius: 12px; padding: 15px 25px; bottom: 30px;">
                   <h4 style="color: #fff; font-weight: 700; margin-bottom: 5px;">360° Panoramic Sky Terrace &amp; Sitout</h4>
                   <p style="color: #ddd; margin: 0; font-size: 14px;">Rooftop timber dining lounge framing rolling hills, sunset horizons, and starry nights.</p>
@@ -216,7 +216,7 @@
               </div>
 
               <div class="carousel-item" data-bs-interval="4500">
-                <img src="{% static 'assets/images/property-05.jpg' %}" class="d-block w-100" alt="Modular Chef Kitchen" style="max-height: 520px; object-fit: cover;">
+                <img loading="lazy" src="{% static 'assets/images/property-05.jpg' %}" class="d-block w-100" alt="Modular Chef Kitchen" style="height: 520px; width: 100%; object-fit: cover;">
                 <div class="carousel-caption d-none d-md-block" style="background: rgba(0,0,0,0.6); border-radius: 12px; padding: 15px 25px; bottom: 30px;">
                   <h4 style="color: #fff; font-weight: 700; margin-bottom: 5px;">Fully-Equipped Modular Kitchens</h4>
                   <p style="color: #ddd; margin: 0; font-size: 14px;">3 kitchens with multi-burner gas stoves, cookware, and refrigeration for family feasts.</p>
@@ -317,7 +317,7 @@
                       </div>
                     </div>
                     <div class="col-lg-6">
-                      <img src="{% static 'assets/images/deal-01.jpg' %}" alt="Master Suite at Grace Ville">
+                      <img loading="lazy" src="{% static 'assets/images/deal-01.jpg' %}" alt="Master Suite at Grace Ville">
                     </div>
                     <div class="col-lg-3">
                       <h4>Peaceful Weekend &amp; Holiday Stays</h4>
@@ -342,7 +342,7 @@
                       </div>
                     </div>
                     <div class="col-lg-6">
-                      <img src="{% static 'assets/images/deal-02.jpg' %}" alt="Day Outing at Grace Ville">
+                      <img loading="lazy" src="{% static 'assets/images/deal-02.jpg' %}" alt="Day Outing at Grace Ville">
                     </div>
                     <div class="col-lg-3">
                       <h4>Memorable Day Getaways</h4>
@@ -367,7 +367,7 @@
                       </div>
                     </div>
                     <div class="col-lg-6">
-                      <img src="{% static 'assets/images/deal-03.jpg' %}" alt="Rooftop Terrace Grace Ville">
+                      <img loading="lazy" src="{% static 'assets/images/deal-03.jpg' %}" alt="Rooftop Terrace Grace Ville">
                     </div>
                     <div class="col-lg-3">
                       <h4>Celebrations &amp; Entertainment</h4>
@@ -400,7 +400,7 @@
         {% for space in spaces %}
         <div class="col-lg-4 col-md-6">
           <div class="item">
-            <a href="{% url 'property_details' %}"><img src="{% static space.image_rel_path %}" alt="{{ space.title }}"></a>
+            <a href="{% url 'property_details' %}"><img loading="lazy" src="{% static space.image_rel_path %}" alt="{{ space.title }}"></a>
             <span class="category">{{ space.subtitle }}</span>
             <h6>{{ space.category|title }}</h6>
             <h4><a href="{% url 'property_details' %}">{{ space.title }}</a></h4>
@@ -650,4 +650,7 @@
   }
 </script>
 {% endblock %}
+
+
+
 

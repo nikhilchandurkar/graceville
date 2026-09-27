@@ -409,3 +409,8 @@ def download_calendar_ics(request, ref_id):
 
 def custom_404_view(request, exception=None):
     return render(request, '404.html', status=404)
+
+
+def gallery(request):
+    return render(request, 'gallery.html')
+
