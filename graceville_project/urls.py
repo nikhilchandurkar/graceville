@@ -14,7 +14,7 @@ def robots_txt(request):
     content = """User-agent: *
 Allow: /
 Disallow: /admin/
-Sitemap: https://graceville.vercel.app/sitemap.xml
+Sitemap: https://graceville-zeta.vercel.app/sitemap.xml
 """
     return HttpResponse(content, content_type="text/plain")
 
@@ -22,27 +22,27 @@ def sitemap_xml(request):
     content = """<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://graceville.vercel.app/</loc>
+    <loc>https://graceville-zeta.vercel.app/</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://graceville.vercel.app/spaces/</loc>
+    <loc>https://graceville-zeta.vercel.app/spaces/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://graceville.vercel.app/space-details/</loc>
+    <loc>https://graceville-zeta.vercel.app/space-details/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://graceville.vercel.app/gallery/</loc>
+    <loc>https://graceville-zeta.vercel.app/gallery/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://graceville.vercel.app/contact/</loc>
+    <loc>https://graceville-zeta.vercel.app/contact/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
