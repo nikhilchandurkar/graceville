@@ -49,15 +49,14 @@ def sitemap_xml(request):
 </urlset>"""
     return HttpResponse(content, content_type="application/xml")
 
-def google_verification(request, token="fb90c3c51168b83b"):
-    return HttpResponse(f"google-site-verification: google{token}.html", content_type="text/html")
+def google_verification(request):
+    return HttpResponse("google-site-verification: googlefb90c3c51168b83b.html\n", content_type="text/html")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('robots.txt', robots_txt, name='robots_txt'),
     path('sitemap.xml', sitemap_xml, name='sitemap_xml'),
     path('googlefb90c3c51168b83b.html', google_verification, name='google_verification'),
-    re_path(r'^google(?P<token>[a-f0-9]+)\.html$', google_verification),
     path('favicon.ico', RedirectView.as_view(url='/static/assets/images/favicon.ico', permanent=True)),
     path('', include('villa.urls')),
 ]
